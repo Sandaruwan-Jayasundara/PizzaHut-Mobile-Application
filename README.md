@@ -99,7 +99,7 @@ A list of commonly used resources that I find helpful are listed in the acknowle
 * [S.M.J Fernando](https://github.com/mandara-fernando)
 <!-- * [M.U.D Jayawardhana](https://github.com/Ushanjay) -->
 * [J.M.I.S Jayasundara](https://github.com/Sandaruwan-Jayasundara)
-<!-- * [D.W.L.K Fonseka](https://github.com/Kethaka-fonseka) -->
+* [D.W.L.K Fonseka](https://github.com/Kethaka-fonseka)
 
 
 ## Getting Started
