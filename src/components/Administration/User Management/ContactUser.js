@@ -45,6 +45,32 @@ export default class ViewMoreData extends Component {
     });
   };
 
+  //Email JS credientials
+  sendEmail(e) {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_gmail",
+        "template_9x6vq5v",
+        e.target,
+        "user_h6YVAt2zsrr63XZUNdgs7"
+      )
+      .then(
+        (result) => {
+          this.setState({
+            Message:"success",
+          });
+
+        },
+        (error) => {
+          this.setState({
+            Message:"warning",
+          });
+
+        }
+      );
+  }
 
 
 
