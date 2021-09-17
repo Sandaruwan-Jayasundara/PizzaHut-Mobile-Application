@@ -19,7 +19,7 @@ import AddUser from "../components/Administration/User Management/AddUser";
 import UpdateUser from "../components/Administration/User Management/UpdateUser";
 import ViewMoreDetails from "../components/Administration/User Management/ViewRecords";
 import ContactUsers from "../components/Administration/User Management/ContactUser";
-import Payments from "../components/Administration/Payment Management/Payments";
+// import Payments from "../components/Administration/Payment Management/Payments";
 
 
 
