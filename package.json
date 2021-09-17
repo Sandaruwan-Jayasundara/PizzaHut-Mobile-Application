@@ -1,6 +1,7 @@
 {
-  "name": "spm",
-  "version": "0.1.0",
+  "name": "pizzahut-frontend",
+  "version": "1.0.0",
+  "description": "<!--\r *** Thanks for checking out the Best-README-Template. If you have a suggestion\r *** that would make this better, please fork the repo and create a pull request\r *** or simply open an issue with the tag \"enhancement\".\r *** Thanks again! Now go create something AMAZING! :D\r -->",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.3",
@@ -28,18 +29,26 @@
     "styled-components": "^5.3.0",
     "web-vitals": "^1.1.2"
   },
+  "devDependencies": {
+    "prettier": "2.3.2"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mandara-fernando/PizzaHut-Frontend.git"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mandara-fernando/PizzaHut-Frontend/issues"
+  },
+  "homepage": ".",
   "browserslist": {
     "production": [
       ">0.2%",
@@ -51,20 +60,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "prettier": "2.3.2"
-  },
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mandara-fernando/PizzaHut.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mandara-fernando/PizzaHut/issues"
-  },
-  "homepage": "https://github.com/mandara-fernando/PizzaHut#readme"
+  }
 }
