@@ -48,7 +48,8 @@ function CustomerNavbar(props) {
         console.log("err=>" + err);
     });
 }, [6]);
-  function Logout() {
+
+  const Logout = ()=> {
     axios
     .get("http://localhost:8070/auth/logout")
     .then((response) => {
