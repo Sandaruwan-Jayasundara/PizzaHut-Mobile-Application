@@ -1,27 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  Col,
-  Container,
-  ListGroup,
-  ListGroupItem,
-  Row,
-} from "react-bootstrap";
+import { Button, ButtonGroup, Card, Container } from "react-bootstrap";
 import { GiHamburgerMenu } from "react-icons/all";
 import { Grid, Paper } from "@material-ui/core";
 import SingleProduct from "./Main Pages/SingleProduct";
 
-//menu function 
+//menu function
 const Menu = () => {
   const [category, setCategoryState] = useState("");
   const [products, setProduct] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8070/products")//retrieve all the products using api
+      .get("http://localhost:8070/products") //retrieve all the products using api
       .then((res) => {
         setProduct(res.data);
       })
@@ -29,7 +20,7 @@ const Menu = () => {
         console.log("err=>" + err);
       });
   }, [category]);
-  
+
   //This function is to set category when customer click one of the category button
   function openFoodList(cat) {
     console.log(cat);
@@ -42,8 +33,8 @@ const Menu = () => {
         <h1 className="main-titles">Menu</h1>
         <hr className="main-divide" />
       </div>
-      <Row className={"p-4"}>
-        <Col lg={3}>
+      <div className="d-flex gap-2">
+        <div style={{ width: "300px" }}>
           <Card className={"category-card p-3"}>
             <Card.Body>
               <Card.Title>
@@ -90,8 +81,8 @@ const Menu = () => {
               </ButtonGroup>
             </Card.Body>
           </Card>
-        </Col>
-        <Col lg={9}>
+        </div>
+        <div className={"p-3"} style={{ width: "100%" }}>
           <div className={`tab-content ${category === "" ? "active" : ""}`}>
             <h1 className="food-titles">Any</h1>
             <hr className="food-divide" />
@@ -226,8 +217,8 @@ const Menu = () => {
                 })}
             </Grid>
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
     </Container>
   );
 };
