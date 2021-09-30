@@ -16,7 +16,8 @@ function ChangePassword(props) {
           className={"mb-2"}
           variant="caption"
         >
-          *You are about to change you password. Hope you know what you doing
+          *You are about to change you password. Hope you know what you are
+          doing
         </Typography>
         <Form.Group className={"mb-3"} as={Col} controlId="formGridPassword">
           <Form.Label>Password</Form.Label>
