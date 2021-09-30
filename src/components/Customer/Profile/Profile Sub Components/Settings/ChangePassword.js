@@ -12,7 +12,7 @@ function ChangePassword(props) {
           <hr className="divide" />
         </div>
         <Typography
-          style={{ color: "#747474" }}
+          style={{ color: "#e23636" }}
           className={"mb-2"}
           variant="caption"
         >
