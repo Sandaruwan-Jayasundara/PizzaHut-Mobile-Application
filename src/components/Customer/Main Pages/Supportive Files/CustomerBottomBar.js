@@ -7,7 +7,7 @@ const BottomBar = () => {
       <Navbar expand={"lg"} variant={"light"} bg={"light"} className={""}>
         <Container fluid={"lg"}>
           <Nav className={"m-auto customer-bot-nav "}>
-            <Nav.Link href="/features">
+            <Nav.Link href="/home">
               <h4 className={"bot-link"}>Home</h4>
             </Nav.Link>
             <Nav.Link href="/menu">
