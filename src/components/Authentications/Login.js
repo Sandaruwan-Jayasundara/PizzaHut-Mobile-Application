@@ -11,9 +11,11 @@ import {
   NotificationManager,
 } from "react-notifications";
 import "react-notifications/lib/notifications.css";
+import { Link } from "react-router-dom";
+import SignUp from "./SignUp";
 
 //Login function
-function Login() {
+function Login(props) {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [Notification, setNotification] = useState("");
@@ -27,113 +29,141 @@ function Login() {
     };
 
     axios
-        .post("http://localhost:8070/auth/login", data)
-        .then((response) => {
-          //Check user types and display notifications
-          if (response.data.users.Role === "Admin") {
-            localStorage.setItem("user", "Admin");
-            NotificationManager.success("Success", "Login Success");
-            setTimeout(
-                function () {
-                  window.location.href = "/admin/view-employees";
-                }.bind(this),
-                1000
-            );
-          } else if (response.data.users.Role === "User") {
-            localStorage.setItem("user", "User");
+      .post("http://localhost:8070/auth/login", data)
+      .then((response) => {
+        //Check user types and display notifications
+        if (response.data.users.Role === "Admin") {
+          localStorage.setItem("user", "Admin");
+          NotificationManager.success("Success", "Login Success");
+          setTimeout(
+            function () {
+              window.location.href = "/admin/view-employees";
+            }.bind(this),
+            1000
+          );
+        } else if (response.data.users.Role === "User") {
+          localStorage.setItem("user", "User");
 
-            localStorage.setItem("userName", response.data.users.FirstName);
-            NotificationManager.success("Success", "Login Success");
-            setTimeout(
-                function () {
-                  window.location.href = "/";
-                }.bind(this),
-                1000
-            );
-          } else if (response.data.users.Role === "BranchManager") {
-            localStorage.setItem("user", response.data.users.Role);
-            localStorage.setItem("branch", response.data.users.Branch);
-            NotificationManager.success("Success", "Login Success");
-            setTimeout(
-                function () {
-                  window.location.href = "/admin/em/view-employees";
-                }.bind(this),
-                1000
-            );
-          } else if (response.data.users.Role === "DeliveryManager") {
-            localStorage.setItem("user", response.data.users.Role);
-            localStorage.setItem("branch", response.data.users.Branch);
-            NotificationManager.success("Success", "Login Success");
-            setTimeout(
-                function () {
-                  window.location.href = "/admin/delivery";
-                }.bind(this),
-                1000
-            );
-          } else {
-            NotificationManager.info("Invalid Login");
-            setTimeout(
-                function () {
-                  window.location.href = "/";
-                }.bind(this),
-                1000
-            );
-          }
-        })
-        .catch((err) => {
-          NotificationManager.warning("Warning", "Invalid Credentials ", 3000);
-        });
+          localStorage.setItem("userName", response.data.users.FirstName);
+          NotificationManager.success("Success", "Login Success");
+          setTimeout(
+            function () {
+              window.location.href = "/";
+            }.bind(this),
+            1000
+          );
+        } else if (response.data.users.Role === "BranchManager") {
+          localStorage.setItem("user", response.data.users.Role);
+          localStorage.setItem("branch", response.data.users.Branch);
+          NotificationManager.success("Success", "Login Success");
+          setTimeout(
+            function () {
+              window.location.href = "/admin/em/view-employees";
+            }.bind(this),
+            1000
+          );
+        } else if (response.data.users.Role === "DeliveryManager") {
+          localStorage.setItem("user", response.data.users.Role);
+          localStorage.setItem("branch", response.data.users.Branch);
+          NotificationManager.success("Success", "Login Success");
+          setTimeout(
+            function () {
+              window.location.href = "/admin/delivery";
+            }.bind(this),
+            1000
+          );
+        } else {
+          NotificationManager.info("Invalid Login");
+          setTimeout(
+            function () {
+              window.location.href = "/";
+            }.bind(this),
+            1000
+          );
+        }
+      })
+      .catch((err) => {
+        NotificationManager.warning("Warning", "Invalid Credentials ", 3000);
+      });
   }
   return (
-      <div>
-        <Container className={"pt-3"}>
+    <div>
+      <div className="d-flex gap-2">
+        <div>
+          <img
+            src="https://static.toiimg.com/thumb/56933159.cms?imgsize=686279&width=800&height=800"
+            alt="Paris"
+            width="450"
+            height="500"
+          />
+        </div>
+        <div>
           <NotificationContainer />
-          <Card className={"p-5 mb-3"}>
-            <div className="text-center mb-2">
-              <h1 className="form-titles ">Login</h1>
-              <hr className="divide" />
-            </div>
-            <Form onSubmit={Authentication}>
-              <Form.Group as={Col} controlId="formGridEmail">
+
+          <div className={"p-5 mb-3"}>
+            <Row>
+              <div className="text-center mb-2">
+                <h1 className="form-titles ">Sign In</h1>
+                <hr className="divide" />
+              </div>
+              {/*<Form onSubmit={Authentication}>*/}
+
+              <Form.Group className="mb-3" controlId="formGridEmail">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
-                    type="email"
-                    placeholder="Email"
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
+                  type="email"
+                  placeholder="Email"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
               </Form.Group>
-              <br />
 
-              <Form.Group as={Col} controlId="formGridEmail">
+              <Form.Group className="mb-3" controlId="formGridPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
+                  type="password"
+                  placeholder="Password"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
               </Form.Group>
-              <br />
-
-              <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  style={{ backgroundColor: "#d00000", color: "#FFF" }}
+            </Row>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              className={"mt-3 mb-3"}
+              onClick={Authentication}
+              style={{ backgroundColor: "#c92e31", color: "#FFF" }}
+            >
+              Sign In
+            </Button>
+            {/*</Form>   {/*</Form>*/}
+            <span
+              style={{
+                textTransform: "none",
+                color: "#030000",
+                paddingLeft: 100,
+              }}
+            >
+              Don't have an account?{" "}
+              <a
+                style={{
+                  textTransform: "none",
+                  color: "#c92e31",
+                  cursor: "pointer",
+                }}
+                onClick={() => props.fun("")}
               >
-                Submit
-              </Button>
-              <br />
-              <br />
-
-              <a href="/signUp">Create account here?</a>
-            </Form>
-          </Card>
-        </Container>
-      </div>
+                Sign Up
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>{" "}
+    </div>
   );
 }
 

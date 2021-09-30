@@ -1,9 +1,13 @@
-.deliver-button{
-    line-height: 1.4;
+Button.deliver-button{
+    margin-left: 10px;
+    cursor: pointer;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid rgba(255, 255, 255, 0);
     overflow: hidden;
 }
 
-.deliver-button:hover{
+Button.deliver-button:hover{
     cursor: pointer;
     border: 1px solid #FFFFFF;
 overflow: hidden;
@@ -35,6 +39,12 @@ overflow: hidden;
     padding-left: 40px;
     color: #4d4d4d;
 }
+.bot-link.active{
+    font-size: 16px;
+    padding-left: 40px;
+    color: #c92e31;;
+}
+
 
 .bot-link:hover{
     color: #c92e31;;
@@ -50,6 +60,7 @@ overflow: hidden;
 }
 
 .menu-icons:hover{
+
     cursor: pointer;
 }
 .main-titles{
@@ -78,7 +89,7 @@ overflow: hidden;
 
 }
 .main-divide{
-    border-bottom: 2px solid rgba(21, 3, 3, 0.37);
+    border-bottom: 3px solid rgba(255, 60, 60, 0.37);
     width: 100px;
 
     margin: auto;}
@@ -97,10 +108,11 @@ overflow: hidden;
     text-align: start;
 }
 .category-btn:hover{
-    background: #c92e31;;
+    background: #c92e31;
 }
+
 .category-btn :checked{
-    background: #c92e31;;
+    background: #c92e31;
 }
 
 .food-titles{
@@ -133,4 +145,37 @@ overflow: hidden;
 .bill-total-field{
     font-size: 14px;
     color: #585757;
+}
+
+Button.sign-button{
+    line-height: 1.4;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.sign-button:hover{
+    line-height: 1.4;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+}
+
+Button.signup-button{
+    line-height: 1.4;
+    border: 1px solid #d9d9d9;
+    text-decoration: none;
+    color: #d9d9d9;
+    padding: 10px;
+}
+
+.signup-button:hover{
+    line-height: 1.4;
+    border: 1px solid #d9d9d9;
+    color: #d9d9d9;
+}
+
+.button-text{
+    text-decoration: none;
+    color: #FFFFFF;
 }
