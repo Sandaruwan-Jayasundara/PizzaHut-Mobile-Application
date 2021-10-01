@@ -1,13 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Dialog, Select, Slide, Zoom } from "@material-ui/core";
 import { BsPlus, FaRegAddressBook, IoList } from "react-icons/all";
 import OrderItem from "./OrderItem";
 import AddressItem from "./AddressItem";
 import EditAddress from "./AddressBook/EditAddress";
 import AddAddress from "./AddressBook/AddAddress";
+import axios from "axios";
 
 function AddressBook(props) {
   const [openAddAddress, setAdd] = useState(false);
+  const [addresses, setAddresses] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:8070/deliveries/addresses/${localStorage.getItem(
+          "Email"
+        )}`
+      )
+      .then((res) => {
+        setAddresses(res.data);
+      })
+      .catch((err) => {
+        console.log("err=>" + err);
+      });
+  }, []);
 
   const handleClickOpenPop = (value) => {
     if (value === "add") {
@@ -39,10 +55,14 @@ function AddressBook(props) {
         </div>
       </div>
 
-      {/*Loop This div*/}
-      <div>
-        <AddressItem />
-      </div>
+      {addresses.map((address, index) => {
+        return (
+          <div>
+            <AddressItem key={index} address={address} />
+          </div>
+        );
+      })}
+
       {/*<div>*/}
       {/*  <div className={` ${orderStatus === "completed" ? "" : "d-none"}`}>*/}
       {/*    {" "}*/}

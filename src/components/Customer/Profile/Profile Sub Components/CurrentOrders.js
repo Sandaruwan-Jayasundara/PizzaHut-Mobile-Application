@@ -2,23 +2,32 @@ import React, { useEffect, useState } from "react";
 import "../../../../stylesheets/Profile.css";
 import { Dropdown, Form } from "react-bootstrap";
 import { IoList } from "react-icons/all";
-import { Select, Typography } from "@material-ui/core";
+import { Grid, Paper, Select, Typography } from "@material-ui/core";
 import OrderItem from "./OrderItem";
-import axios from 'axios';
-function CurrentOrders(props) {
+import axios from "axios";
+import AddressItem from "./AddressItem";
+import SingleProduct from "../../Main Pages/SingleProduct";
+function CurrentOrders() {
   const [orderStatus, setOrderStatus] = useState("All");
-  const [orders,setOrders]=useState([]);
+  const [orders, setOrders] = useState([]);
   function openOrdersList(value) {
     setOrderStatus(value);
   }
 
-useEffect(()=>{
-axios.get(`http://localhost:8070/orders/getcurrent/${localStorage.getItem('Email')}`).then(res=>{
-  setOrders(res.data)
-}).catch(err=>{
-  console.log('err=>'+err);
-})
-},[]);
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:8070/orders/getcurrent/${localStorage.getItem(
+          "Email"
+        )}`
+      )
+      .then((res) => {
+        setOrders(res.data);
+      })
+      .catch((err) => {
+        console.log("err=>" + err);
+      });
+  }, [orderStatus]);
   return (
     <div>
       <div>
@@ -57,28 +66,58 @@ axios.get(`http://localhost:8070/orders/getcurrent/${localStorage.getItem('Email
         </div>
       </div>
 
-  
-
       <div>
-        <div className={` ${orderStatus === "All" ? "" : "d-none"}`}>
-        {
-          orders.map(order=>{
-           return  <OrderItem  orders={order}/>;
-          })
-        }
-        </div>{" "}
+        {orders.map((order, index) => {
+          return (
+            <div className={` ${orderStatus === "All" ? "" : "d-none"}`}>
+              <OrderItem order={order} />
+            </div>
+          );
+        })}
         <div className={` ${orderStatus === "New" ? "" : "d-none"}`}>
-          <OrderItem />
+          {orders
+            .filter((order) => {
+              if (order.status === "new") {
+                return order;
+              }
+            })
+            .map((order, index) => {
+              return <OrderItem key={index} order={order} />;
+            })}
         </div>{" "}
         <div className={` ${orderStatus === "Processing" ? "" : "d-none"}`}>
-          <OrderItem />
+          {orders
+            .filter((order) => {
+              if (order.status === "processing") {
+                return order;
+              }
+            })
+            .map((order, index) => {
+              return <OrderItem key={index} order={order} />;
+            })}
         </div>{" "}
         <div className={` ${orderStatus === "Prepared" ? "" : "d-none"}`}>
-          <OrderItem />
+          {orders
+            .filter((order) => {
+              if (order.status === "ready") {
+                return order;
+              }
+            })
+            .map((order, index) => {
+              return <OrderItem key={index} order={order} />;
+            })}
         </div>{" "}
         <div className={` ${orderStatus === "Incoming" ? "" : "d-none"}`}>
-          <OrderItem />
-        </div>
+          {orders
+            .filter((order) => {
+              if (order.status === "on the way") {
+                return order;
+              }
+            })
+            .map((order, index) => {
+              return <OrderItem key={index} order={order} />;
+            })}
+        </div>{" "}
       </div>
     </div>
   );

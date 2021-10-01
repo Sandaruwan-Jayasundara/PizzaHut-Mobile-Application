@@ -8,18 +8,6 @@ import axios from "axios";
 function AddressItem(props) {
   const [openEditAddress, setEdit] = useState(false);
   const [openDeleteAddress, setDelete] = useState(false);
-  const [addresses,setAddresses]=useState([]);
-
-useEffect(()=>{
-axios.get(`http://localhost:8070/deliveries/addresses/${localStorage.getItem('Email')}`).then(res=>{
-setAddresses(res.data);
-}).catch(err=>{
-  console.log("err=>"+err);
-})
-
-
-},[])
-
 
   const handleClickOpenPop = (value) => {
     if (value === "edit") {
@@ -37,21 +25,18 @@ setAddresses(res.data);
     }
   };
   return (
-   <div>
-   {addresses.map((add,index)=>{
-     return(
-      <div>
+    <div>
       <div>
         {" "}
         <div className={"list-address-item d-flex justify-content-between "}>
           <div>
             <div>
-              <span className={"address-item-title"}>{add.fullname}</span>
+              <span className={"address-item-title"}>
+                {props.address.fullname}
+              </span>
             </div>
             <div>
-              <span className={"address"}>
-               {add.address},{add.city} {add.state},{add.zipcode}
-              </span>
+              <span className={"address"}>sasda</span>
             </div>
           </div>{" "}
           <div className={" d-flex gap-1 align-self-center "}>
@@ -84,17 +69,10 @@ setAddresses(res.data);
           TransitionComponent={Slide}
           onClose={() => handleClosePop("edit")}
         >
-          <EditAddress address={add} close={handleClosePop} />
+          <EditAddress address={props.address} close={handleClosePop} />
         </Dialog>
       </div>
     </div>
-
-
-     );
-   })}
-   
-   
-   </div>
   );
 }
 

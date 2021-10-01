@@ -1,10 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Select } from "@material-ui/core";
 import { IoList } from "react-icons/all";
 import OrderItem from "./OrderItem";
+import axios from "axios";
 
 function OrderHistory(props) {
   const [orderStatus, setOrderStatus] = useState("completed");
+  const [orders, setOrders] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:8070/orders/getcurrent/${localStorage.getItem(
+          "Email"
+        )}`
+      )
+      .then((res) => {
+        setOrders(res.data);
+      })
+      .catch((err) => {
+        console.log("err=>" + err);
+      });
+  }, [orderStatus]);
   function openOrdersList(value) {
     setOrderStatus(value);
   }
@@ -46,10 +62,26 @@ function OrderHistory(props) {
       <div>
         <div className={` ${orderStatus === "completed" ? "" : "d-none"}`}>
           {" "}
-          <OrderItem />
+          {orders
+            .filter((order) => {
+              if (order.status === "completed") {
+                return order;
+              }
+            })
+            .map((order, index) => {
+              return <OrderItem key={index} order={order} />;
+            })}
         </div>{" "}
         <div className={` ${orderStatus === "cancelled" ? "" : "d-none"}`}>
-          <OrderItem />
+          {orders
+            .filter((order) => {
+              if (order.status === "canceled") {
+                return order;
+              }
+            })
+            .map((order, index) => {
+              return <OrderItem key={index} order={order} />;
+            })}
         </div>{" "}
       </div>
     </div>

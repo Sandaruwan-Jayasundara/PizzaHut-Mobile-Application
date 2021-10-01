@@ -23,7 +23,7 @@ function EditAddress(props) {
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
-            placeholder={props.address}
+            placeholder={props.address.fullname}
             // onChange={(e) => {
             //     setAddress(e.target.value);
             // }}
@@ -33,7 +33,7 @@ function EditAddress(props) {
           <Form.Label>No</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Ex:102/3"
+            placeholder={props.address.address}
             // onChange={(e) => {
             //     setAddress(e.target.value);
             // }}
