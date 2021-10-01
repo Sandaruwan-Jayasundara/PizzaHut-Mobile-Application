@@ -1,29 +1,34 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { Card, Container } from "react-bootstrap";
-import { Paper } from "@material-ui/core";
+import { Button, Paper } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { GiRollingEnergy, ImExit } from "react-icons/all";
+import { GiRollingEnergy, ImExit, RiDownload2Fill } from "react-icons/all";
+import { Col, Divider, Row, Table } from "antd";
+import "antd/dist/antd.css";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 class ViewRecords extends Component {
   constructor(props) {
     super(props);
     this.state = {
       Management: [],
-      transaction:"",
+      transaction: "",
       Title: "",
       Image: "",
       Qty: "",
       Total: "",
-      time:"",
+      time: "",
       fullDate: "",
       Email: "",
-      UserName:"",
-      refund:"",
-      refundDate:"",
-      status:"",
-      RefundTransaction:""
+      UserName: "",
+      refund: "",
+      refundDate: "",
+      status: "",
+      RefundTransaction: "",
     };
+    this.Report = this.Report.bind(this);
   }
   componentDidMount() {
     const id = this.props.match.params.id;
@@ -44,7 +49,7 @@ class ViewRecords extends Component {
           refundDate: response.data.transactions.refundDate,
           RefundTransaction: response.data.transactions.RefundTransaction,
           status: response.data.transactions.status,
-          RefundStatus: "Completed"
+          RefundStatus: "Completed",
         });
       })
       .catch(function (err) {
@@ -52,254 +57,137 @@ class ViewRecords extends Component {
       });
   }
 
+  Report = () => {
+    const input = document.getElementById("pdfdiv");
+    html2canvas(input).then((canvas) => {
+      let imgWidth = 220;
+      let imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+
+      let position = 0;
+      pdf.addImage(imgData, "JPEG", 0, 10, imgWidth, imgHeight);
+      pdf.save("Transactions.pdf");
+    });
+  };
+
   render() {
     return (
-      <Container>
-        <Paper elevation={"9"}>
-          <Card className='text-center'>
-          <div className={"go-back-icon"}>
-            <Link to={"/admin/payment/management"}>
-              <ImExit color={"black"} />
-            </Link>
-          </div>
-            <Card.Header>
-              {" "}
-              <h1 className={"text-center sub-titles mt-2"}>Transactions</h1>
-            </Card.Header>
-                    <Card.Body>
-                        
-       
-              <Card.Text>
-                <div align='center' style={{ marginTop: "60px", marginLeft:'100px' }}>
-                  <div >
-                    <form style={{backgroundColor:'white'}} class='form1'>
-
-                    <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <h3 style={{ float: "left", marginLeft: "80px",color:'black' }}>
-                             Transaction
-                              <span style={{ color: "red" }}> </span>
-                            </h3>
-                          </span>
-                        </div>
-                      </div>
-
-
-         
-                    <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <p style={{ float: "left", marginLeft: "80px" }}>
-                              Transaction
-                              <span style={{ color: "red" }}>:</span>
-                            </p>
-                          </span>
-                        </div>
-                        <p>{this.state.transaction}</p>
-                      </div>
-
-
-                      <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <p style={{ float: "left", marginLeft: "80px" }}>
-                              Date
-                              <span style={{ color: "red" }}>:</span>
-                            </p>
-                          </span>
-                        </div>
-                        <p>{this.state.fullDate}</p>
-                      </div>
-
-                      <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <p style={{ float: "left", marginLeft: "80px" }}>
-                              Time<span style={{ color: "red" }}>:</span>
-                            </p>
-                          </span>
-                        </div>
-                        <p>{this.state.time}</p>
-                      </div>
-            
-          
-                      <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <p style={{ float: "left", marginLeft: "80px" }}>
-                              Amount<span style={{ color: "red" }}>:</span>
-                            </p>
-                          </span>
-                        </div>
-                        <p>Rs. {this.state.Total}. 00</p>
-                      </div>
-                      { this.state.status == "Refund" &&
-                      <div>
-                      <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <h3 style={{ float: "left", marginLeft: "80px", color:'black', marginTop:'20px' }}>
-                              Refund
-                            </h3>
-                          </span>
-                        </div>
-                      </div>
-      
-                      <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <p style={{ float: "left", marginLeft: "80px" }}>
-                              Refund Transaction<span style={{ color: "red" }}>:</span>
-                            </p>
-                          </span>
-                        </div>
-                        <p>{this.state.RefundTransaction}</p>
-                      </div>
-
-                      <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <p style={{ float: "left", marginLeft: "80px" }}>
-                              Refund Amount<span style={{ color: "red" }}>:</span>
-                            </p>
-                          </span>
-                        </div>
-                        <p>Rs. - {this.state.refund}. 00</p>
-                      </div>
-
-                      <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <p style={{ float: "left", marginLeft: "80px" }}>
-                              Refund Date<span style={{ color: "red" }}>:</span>
-                            </p>
-                          </span>
-                        </div>
-                        <p> {this.state.refundDate}</p>
-                      </div>
-
-
-                      <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <p style={{ float: "left", marginLeft: "80px" }}>
-                              Refund Status<span style={{ color: "red" }}>:</span>
-                            </p>
-                          </span>
-                        </div>
-                        <p>{this.state.RefundStatus}</p>
-                      </div>
-</div>
-                    }
-
-
-                    <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <h3 style={{ float: "left", marginLeft: "80px", color:'black', marginTop:'20px' }}>
-                              Product
-                            </h3>
-                          </span>
-                        </div>
-                      </div>
-
-                      <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <p style={{ float: "left", marginLeft: "80px" }}>
-                              Buyer Name<span style={{ color: "red" }}>:</span>
-                            </p>
-                          </span>
-                        </div>
-                        <p>  {this.state.UserName}  </p>
-                      </div>
-
-                      <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <p style={{ float: "left", marginLeft: "80px" }}>
-                              Buyer Email<span style={{ color: "red" }}>:</span>
-                            </p>
-                          </span>
-                        </div>
-                        <p>  {this.state.Email}  </p>
-                      </div>
-
-                      <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <p style={{ float: "left", marginLeft: "80px" }}>
-                              Product Name<span style={{ color: "red" }}>:</span>
-                            </p>
-                          </span>
-                        </div>
-                        <p>  {this.state.Title}  </p>
-                      </div>
-                  
-
-
-                      <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <p style={{ float: "left", marginLeft: "80px" }}>
-                              Product<span style={{ color: "red" }}>:</span>
-                            </p>
-                          </span>
-                        </div>
-                        
-                        <p>
-                        <img
-                        alt='Avatar'
-                        center
-                        style={{
-                          width: "100px",
-                          height: "100px",
-                        }}
-                        src={`http://localhost:3000/Profile/${this.state.Image}`}
-                      />
-                        
-                        </p>
-                      </div>
-                  
-
-                      <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <p style={{ float: "left", marginLeft: "80px" }}>
-                              Quantity<span style={{ color: "red" }}>:</span>
-                            </p>
-                          </span>
-                        </div>
-                        <p>[  {this.state.Qty}  ]</p>
-                      </div>
-                  
-                  
-                      <div class='input-group mb-3' style={{ width: "600px" }}>
-                        <div style={{ width: "300px", marginRight: "100;" }}>
-                          <span>
-                            <p style={{ float: "left", marginLeft: "80px" }}>
-                              Price<span style={{ color: "red" }}>:</span>
-                            </p>
-                          </span>
-                        </div>
-                        <p> Rs. {this.state.Total} .00 </p>
-                      </div>
-                  
-
-
-                    </form>
-                  </div>
-                </div>
-              </Card.Text><br/><br/>
+      <div>
+        <Container className={"pt-3"}>
+          <Card className={"p-5 mb-3"}>
+            <div className={"go-back-icon"}>
               <Link to={"/admin/payment/management"}>
-                        Back to Home
-            </Link>
+                <ImExit color={"black"} />
+              </Link>
+            </div>
 
-            </Card.Body>
+            <div className="text-center ">
+              <h1 className="form-titles ">TRANSACTIONS</h1>
+              <hr className="divide" />
+            </div>
+
+            <div id="pdfdiv" component={Paper}>
+              <Card className={"p-5"}>
+                <div className={"text-center"}>
+                  <h6 className="profile-divider m-0">
+                    <span>INVOICE</span>
+                  </h6>{" "}
+                </div>
+
+                <Row gutter={24} style={{ marginTop: 32 }}>
+                  <Col span={8}>
+                    <h3>PizzaHut</h3>
+                    <div>Colombo</div>
+                    <div>Sri Lanka</div>
+                    <div>1000</div>
+                    <div>011 - 8569423</div>
+                  </Col>
+                  <Col span={8} offset={8}>
+                    <table>
+                      <tr>
+                        <th>Invoice # :</th>
+                        <td>{this.state.transaction}</td>
+                      </tr>
+                      <tr>
+                        <th>Transaction Date : </th>
+                        <td> {this.state.fullDate}</td>
+                      </tr>
+                      <tr>
+                        <th>Transaction Time :</th>
+                        <td>{this.state.time}</td>
+                      </tr>
+                    </table>
+                  </Col>
+                </Row>
+
+                <Row style={{ marginTop: 48 }}>
+                  <div>
+                    Bill To: <strong>{this.state.UserName} /</strong>
+                  </div>
+                  <div>{this.state.Email}</div>
+                </Row>
+
+                <Row style={{ marginTop: 48 }}>
+                  <Table
+                    style={{ width: "1000px" }}
+                    dataSource={[
+                      {
+                        id: 1,
+                        name: (
+                          <img
+                            alt="Avatar"
+                            center
+                            style={{
+                              width: "100px",
+                              height: "100px",
+                            }}
+                            src={`http://localhost:3000/Profile/${this.state.Image}`}
+                          />
+                        ),
+
+                        description: <p> {this.state.Title}</p>,
+                        price: <p>Rs. {this.state.Total} .00</p>,
+                        quantity: <p>{this.state.Qty} </p>,
+                      },
+                    ]}
+                    pagination={false}
+                  >
+                    <Table.Column title="Items" dataIndex="name" />
+                    <Table.Column title="Description" dataIndex="description" />
+                    <Table.Column title="Quantity" dataIndex="quantity" />
+                    <Table.Column title="Price" dataIndex="price" />
+                  </Table>
+                </Row>
+
+                <Row style={{ marginTop: 48 }}>
+                  <Col span={8} offset={16}>
+                    <table>
+                      <tr>
+                        <th>Fee :</th>
+                        <td>Rs.0.00</td>
+                      </tr>
+                      <tr>
+                        <th>Nett Total :</th>
+                        <td>Rs. {this.state.Total} .00</td>
+                      </tr>
+                    </table>
+                  </Col>
+                </Row>
+              </Card>
+            </div>
+
+            <Button
+              style={{ width: "200px", marginLeft: "40%" }}
+              className="cancel-button mt-3"
+              startIcon={<RiDownload2Fill />}
+              onClick={this.Report}
+            >
+              Generate Report
+            </Button>
           </Card>
-        </Paper>
-      </Container>
+        </Container>
+      </div>
     );
   }
 }
