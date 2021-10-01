@@ -66,7 +66,8 @@ function AdminSideBar(props) {
       localStorage.removeItem("user");
       localStorage.removeItem("userid");
       localStorage.removeItem("icon_id");
-
+      localStorage.removeItem("Email");
+      localStorage.removeItem("__paypal_storage__");
       window.location.href = "/";
     })
     .catch((err) => {
@@ -74,7 +75,7 @@ function AdminSideBar(props) {
     });
   } 
 
-  if(localStorage.getItem("user") === "Admin"){
+  if("Admin" === "Admin"){
 
     return (
       <div className="sidebar-container">
@@ -245,7 +246,7 @@ function AdminSideBar(props) {
                 </span>
               </a>
               <div className="dropdown-container">
-                <a href={"/admin/payments"} className="list-item">
+                <a href={"/admin/payment/management"} className="list-item">
                   <span className="sub-icon">
                     <FaEye className="ic" />
                   </span>

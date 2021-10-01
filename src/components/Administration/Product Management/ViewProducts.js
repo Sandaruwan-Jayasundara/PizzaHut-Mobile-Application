@@ -185,7 +185,7 @@ function ViewProducts(props) {
                             component="img"
                             height="190"
                             image=""
-                            src={`http://localhost:3000/images/${product.image}`}
+                            src={`http://localhost:3000/Profile/${product.image}`}
                             title="Contemplative Reptile"
                           />
                           <CardContent>

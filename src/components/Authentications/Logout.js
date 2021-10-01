@@ -10,7 +10,8 @@ function Logout(props) {
         localStorage.removeItem("user");
         localStorage.removeItem("userid");
         localStorage.removeItem("icon_id");
-
+        localStorage.removeItem("Email");
+        localStorage.removeItem("__paypal_storage__");
         window.location.href = "/";
       })
       .catch((err) => {

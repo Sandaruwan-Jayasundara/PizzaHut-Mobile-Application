@@ -6,6 +6,7 @@ import "../../../stylesheets/formTitle.css";
 import { useParams } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { Avatar} from "@material-ui/core";
 
 function UpdateUser(props) {
 
@@ -61,23 +62,41 @@ function UpdateUser(props) {
   function sendData(e) {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("FirstName", FirstName);
-    formData.append("LastName", LastName);
-    formData.append("Email", Email);
-    formData.append("Contact", Contact);
-    formData.append("Role", Role);
-    formData.append("Profile", Profile);
 
-    axios
-        .put(`http://localhost:8070/user-management/updates/${id}`, formData)
-        .then((response) => {
-          window.location.href="/admin/em/view-users"
-        })
-        .catch((err) => {
-          alert(err);
-        });
-  }
+    const data ={
+      FirstName,
+      LastName,
+      Email,
+      Contact,
+      Role,
+      Branch
+    }
+
+
+
+if(Profile){
+  axios
+  .put(`http://localhost:8070/user-management/updates/${id}`, data)
+  .then((response) => {
+    window.location.href="/admin/um/view-users"
+  })
+  .catch((err) => {
+    alert(err);
+  });
+}else{
+
+  axios
+  .put(`http://localhost:8070/user-management/update/${id}`, formData)
+  .then((response) => {
+    window.location.href="/admin/um/view-users"
+  })
+  .catch((err) => {
+    alert(err);
+  });
+
+}
+}
+
 
   return (
       <div>
@@ -88,9 +107,23 @@ function UpdateUser(props) {
                 <ImExit color={"black"} />
               </Link>
             </div>
+            
             <div className="text-center mb-2">
+            <div  >
+  
+      <Avatar style={{marginLeft:'-5px',width:'100px', height:'100px'}}
+ 
+        alt="Remy Sharp"
+        src={`http://localhost:3000/Profile/${Profile}`}
+        className={"table-avatar"}
+      />
+
+</div>
+
               <h1 className="form-titles ">UPDATE USER</h1>
+              
               <hr className="divide" />
+              
             </div>
 
             <Form onSubmit={sendData}>
@@ -198,38 +231,10 @@ function UpdateUser(props) {
                 />
               </Form.Group>
 
-              {error && <p className="errorMsg">File not supported</p>}
-              <div
-                  className="imgPreview "
-                  style={{
-                    background: imgPreview
-                        ? `url("${imgPreview}") no-repeat center/cover`
-                        : "#131313",
-                    height: 300,
-                    width: 300,
-                  }}
-              >
-                {!imgPreview && (
-                    <>
-                      <p>Add an image</p>
-                      <label htmlFor="fileUpload" className="customeFileUplad ">
-                        Choose File
-                      </label>
-                      <input
-                          type="file"
-                          id="fileUpload"
-                          onChange={handleImageChange}
-                      />
-                      <span>(jpg, jpeg 0r png)</span>
-                    </>
-                )}
+ 
 
-              </div>
-
-              {imgPreview && (
-
-                  <Button onClick={() => setimgPreview(null)}>Remove Image</Button>
-              )}
+       
+            
               <br />
 
               <Button

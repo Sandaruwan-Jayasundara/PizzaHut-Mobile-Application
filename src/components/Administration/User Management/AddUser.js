@@ -6,6 +6,16 @@ import "../../../stylesheets/formTitle.css";
 import "../../../stylesheets/AddUser.css";
 import {  ImExit } from "react-icons/all";
 import { Link } from "react-router-dom";
+import ReactNotifications from "react-notifications-component";
+import { store } from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+import "animate.css";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
+
 
 function AddUser(props) {
   const [imgPreview, setimgPreview] = useState(null);
@@ -18,10 +28,10 @@ function AddUser(props) {
   const [Contact, setContact] = useState("");
   const [Password, setPassword] = useState("");
   const [Role, setRole] = useState("");
-  const [Branch, setBranch] = useState("");
+  const [Branch, setBranch] = useState("All Branches");
   const [Profile, setProfile] = useState("");
 
-
+  const [Notification, setNotification] = useState("");
 
   const handleImageChange = (e) => {
     setError(false);
@@ -75,21 +85,38 @@ function AddUser(props) {
     axios
         .post("http://localhost:8070/user-management/add", formData)
         .then((response) => {
-          window.location.href="/admin/um/view-users"
 
+          if (response.data.Message === "Success") {
+            localStorage.setItem("user", "Admin");
+            NotificationManager.success("Success", "ADDED A NEW USER");
+            setTimeout(
+                function () {
+                  window.location.href="/admin/um/view-users"
+                }.bind(this),
+                1000
+            );
+          }else{
+            
+            NotificationManager.warning("Warning", response.data.Message, 3000);
+          }
         })
         .catch((err) => {
           alert(err);
         });
+
+
+
+
   }
 
-
+ 
 
 
 
   return (
       <div>
         <Container className={"pt-3"}>
+        <NotificationContainer />
           <Card className={"p-5 mb-3"}>
             <div className={"go-back-icon"}>
               <Link to={"/admin/um/view-users"}>
@@ -165,7 +192,6 @@ function AddUser(props) {
                     }}
                 >
                   <option selected>Select Branch</option>
-                  <option value="Any">Any</option>
                   <option value="Colombo">Colombo</option>
                   <option value="Kandy">Kandy</option>
                   <option value="Galle">Galle</option>
@@ -182,6 +208,7 @@ function AddUser(props) {
                     onChange={(e) => {
                       setContact(e.target.value);
                     }}
+                    maxLength="10"
                     type="number"
                     placeholder="+97778341425"
                 />

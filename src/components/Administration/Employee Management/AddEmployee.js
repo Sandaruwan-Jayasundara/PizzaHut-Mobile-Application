@@ -8,7 +8,6 @@ function AddEmployee() {
   const [LastName, setLastName] = useState("");
   const [Email, setEmail] = useState("");
   const [Contact, setContact] = useState("");
-  const [Password, setPassword] = useState("");
   const [Role, setRole] = useState("");
   const Branch = localStorage.getItem("branch");
 
@@ -20,7 +19,6 @@ function AddEmployee() {
       LastName,
       Email,
       Contact,
-      Password,
       Role,
       Branch,
     };
@@ -85,14 +83,14 @@ function AddEmployee() {
                 <Form.Group controlId="formGridState">
                   <Form.Label>Role</Form.Label>
                   <select
-                      class="form-select form-select-lg mb-3"
+                            class="form-select form-select-lg mb-3 dropdown "
                       aria-label=".form-select-lg example"
                       onChange={(e) => {
                         setRole(e.target.value);
                       }}
                   >
                     <option selected>Select the Role</option>
-                    <option value="deliveryBoy">Delivery Boy</option>
+                    <option value="Delivery-Guy">Delivery Guy</option>
                     <option value="Chef">Chef</option>
                   </select>
                 </Form.Group>
@@ -110,17 +108,7 @@ function AddEmployee() {
               </Form.Group>
               <br />
 
-              <Form.Group controlId="formGridEmail">
-                <Form.Label>Default Password</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Default Password"
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
-                />
-              </Form.Group>
-              <br />
+          
 
               <Button
                   type="submit"

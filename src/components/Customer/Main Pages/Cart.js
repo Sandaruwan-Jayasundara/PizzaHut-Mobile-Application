@@ -12,13 +12,25 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 import axios from "axios";
 
+
+import { useHistory } from "react-router";
+
+
 function Cart(props) {
     const [products, setProducts] = useState([]);
-
+    const history=useHistory();
+    const [total,setTotal]=useState(0);
 
     useEffect(() => {
-        axios.get("http://localhost:8070/carts").then((res) => {
+        axios.get(`http://localhost:8070/carts/${localStorage.getItem("userid")}`).then((res) => {
+
+        console.log(res.data);
             setProducts(res.data);
+        }).then(()=>{
+axios.get(`http://localhost:8070/carts/total/${localStorage.getItem("userid")}`).then(res=>{
+    setTotal(res.data.total);
+    console.log(total);
+})
         }).catch((err) => {
             console.log("err=>" + err);
         });
@@ -29,13 +41,13 @@ function Cart(props) {
         axios.delete(`http://localhost:8070/carts/delete/${
             product._id
         }`).then((res) => {
-            alert("Item Deleted!!!!")
             window.location = "/cart";
 
         }).catch((err) => {
             console.log("err=>" + err);
         });
     }
+
 //This function is to update the product qty of product in the cart 
     function increamentCount(p) {
         const qty = p.qty + 1;
@@ -45,7 +57,6 @@ function Cart(props) {
         axios.patch(`http://localhost:8070/carts/update/${
             p._id
         }`, product).then(res => {
-            alert('update the qty!!!')
             window.location = "/cart"
         }).catch(err => {
             console.log(err);
@@ -53,16 +64,22 @@ function Cart(props) {
     }
 //This function use to get total amount of cost of the cart items
     function getTotal() {
-        let total = 0;
-        products.map(product => {
-            total += (product.price * product.qty);
-
-        })
-        return total;
+      return total;
     }
 
+    function continueToCheckout(){
+     history.push({
+       pathname:"/checkout",
+         state:{
+        total:total,
+        product:products
+        }
+     })
+    }
+
+
     //This function use to update product qty(decrement the count)
-    function decreamentCount(p) {
+     function decreamentCount(p) {
         if (p.qty > 0) {
             const qty = p.qty - 1;
             const product = {
@@ -71,7 +88,6 @@ function Cart(props) {
             axios.patch(`http://localhost:8070/carts/update/${
                 p._id
             }`, product).then(res => {
-                alert('update the qty!!!')
                 window.location = "/cart"
             }).catch(err => {
                 console.log(err);
@@ -232,7 +248,10 @@ function Cart(props) {
                                         color: "white",
                                         padding: "10px 20px 8px 20px"
                                     }
-                            }>
+                           	 }
+          			  onClick={continueToCheckout}
+
+				>
                                 Continue
                             </Button>
                         </Col>

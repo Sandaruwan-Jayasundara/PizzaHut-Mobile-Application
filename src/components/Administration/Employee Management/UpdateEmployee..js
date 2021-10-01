@@ -12,8 +12,8 @@ function UpdateEmployee(props) {
   const [Contact, setContact] = useState("");
   const [Role, setRole] = useState("");
   const [Branch, setBranch] = useState("");
+  const [LastName, setLastName] = useState("");
 
-  console.log(id);
 
   /*get all employees*/
   useEffect(() => {
@@ -132,8 +132,8 @@ function UpdateEmployee(props) {
                       }}
                   >
                     <option selected>{Role}</option>
-                    <option value="Research">Research</option>
-                    <option value="Workshop">Workshop</option>
+                    <option value="Delivery-Guy">Delivery Guy</option>
+                    <option value="Chef">Chef</option>
                   </select>
                 </Form.Group>
               </Row>

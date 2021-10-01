@@ -14,6 +14,17 @@ import "react-notifications/lib/notifications.css";
 import { Link } from "react-router-dom";
 import SignUp from "./SignUp";
 
+
+
+let myCurrentDate = new Date();
+let date = myCurrentDate.getDate();
+let month = myCurrentDate.getMonth() + 1;
+let year = myCurrentDate.getFullYear();
+var hours = myCurrentDate.getHours();
+var ampm = hours >= 12 ? 'pm' : 'am';
+let time =  myCurrentDate.getHours() + ':' + myCurrentDate.getMinutes()+':'+ myCurrentDate.getSeconds() +'.'+ ampm;
+let Dates = year + " / " + month + " / " + date;
+
 //Login function
 function Login(props) {
   const [Email, setEmail] = useState("");
@@ -22,69 +33,72 @@ function Login(props) {
 
   function Authentication(e) {
     e.preventDefault();
-
+    
     const data = {
       Email,
       Password,
+      Dates,
+      time
     };
 
     axios
-      .post("http://localhost:8070/auth/login", data)
-      .then((response) => {
-        //Check user types and display notifications
-        if (response.data.users.Role === "Admin") {
-          localStorage.setItem("user", "Admin");
-          NotificationManager.success("Success", "Login Success");
-          setTimeout(
-            function () {
-              window.location.href = "/admin/view-employees";
-            }.bind(this),
-            1000
-          );
-        } else if (response.data.users.Role === "User") {
-          localStorage.setItem("user", "User");
-
-          localStorage.setItem("userName", response.data.users.FirstName);
-          NotificationManager.success("Success", "Login Success");
-          setTimeout(
-            function () {
-              window.location.href = "/";
-            }.bind(this),
-            1000
-          );
-        } else if (response.data.users.Role === "BranchManager") {
-          localStorage.setItem("user", response.data.users.Role);
-          localStorage.setItem("branch", response.data.users.Branch);
-          NotificationManager.success("Success", "Login Success");
-          setTimeout(
-            function () {
-              window.location.href = "/admin/em/view-employees";
-            }.bind(this),
-            1000
-          );
-        } else if (response.data.users.Role === "DeliveryManager") {
-          localStorage.setItem("user", response.data.users.Role);
-          localStorage.setItem("branch", response.data.users.Branch);
-          NotificationManager.success("Success", "Login Success");
-          setTimeout(
-            function () {
-              window.location.href = "/admin/delivery";
-            }.bind(this),
-            1000
-          );
-        } else {
-          NotificationManager.info("Invalid Login");
-          setTimeout(
-            function () {
-              window.location.href = "/";
-            }.bind(this),
-            1000
-          );
-        }
-      })
-      .catch((err) => {
-        NotificationManager.warning("Warning", "Invalid Credentials ", 3000);
-      });
+        .post("http://localhost:8070/auth/login", data)
+        .then((response) => {
+          //Check user types and display notifications
+          if (response.data.users.Role === "Admin") {
+            localStorage.setItem("user", "Admin");
+            NotificationManager.success("Success", "Login Success");
+            setTimeout(
+                function () {
+                  window.location.href = "/admin/dashboard";
+                }.bind(this),
+                1000
+            );
+          } else if (response.data.users.Role === "User") {
+            localStorage.setItem("user", "User");
+            localStorage.setItem("userid", response.data.users.Email);
+            localStorage.setItem("Email", response.data.users.Email);
+            localStorage.setItem("userName", response.data.users.FirstName);
+            NotificationManager.success("Success", "Login Success");
+            setTimeout(
+                function () {
+                  window.location.href = "/";
+                }.bind(this),
+                1000
+            );
+          } else if (response.data.users.Role === "BranchManager") {
+            localStorage.setItem("user", response.data.users.Role);
+            localStorage.setItem("branch", response.data.users.Branch);
+            NotificationManager.success("Success", "Login Success");
+            setTimeout(
+                function () {
+                  window.location.href = "/admin/em/view-employees";
+                }.bind(this),
+                1000
+            );
+          } else if (response.data.users.Role === "DeliveryManager") {
+            localStorage.setItem("user", response.data.users.Role);
+            localStorage.setItem("branch", response.data.users.Branch);
+            NotificationManager.success("Success", "Login Success");
+            setTimeout(
+                function () {
+                  window.location.href = "/admin/delivery";
+                }.bind(this),
+                1000
+            );
+          } else {
+            NotificationManager.info("Invalid Login");
+            setTimeout(
+                function () {
+                  window.location.href = "/";
+                }.bind(this),
+                1000
+            );
+          }
+        }) 
+        .catch((err) => {
+          NotificationManager.warning("Warning", "Invalid Credentials ", 3000);
+        });
   }
   return (
     <div>
