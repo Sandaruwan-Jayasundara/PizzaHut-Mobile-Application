@@ -19,11 +19,14 @@ import Login from "../../../Authentications/Login";
 import SignUp from "../../../Authentications/SignUp";
 import DeliveryPop from "./Delivery/DeliveryPop";
 import { useHistory } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 function CustomerNavbar(props) {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+ const [text,setText]=useState('');
 
   const [openSignIn, setSignIn] = useState(false);
   const [openSignUp, setSignUp] = useState(false);
@@ -52,6 +55,12 @@ function CustomerNavbar(props) {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+
+const search=()=>{
+  window.location=`/search/${text}`;
+}
+
 
   const closeFromChild = (value) => {
     if (value === "login") {
@@ -83,6 +92,9 @@ function CustomerNavbar(props) {
         localStorage.removeItem("user");
         localStorage.removeItem("userid");
         localStorage.removeItem("icon_id");
+        localStorage.removeItem("userName");
+        localStorage.removeItem("Email");
+        localStorage.removeItem("__paypal_storage__");
 
         window.location.href = "/";
       })
@@ -146,11 +158,15 @@ function CustomerNavbar(props) {
               placeholder="Search"
               aria-label="Search"
               className={"bar"}
+              onChange={(e)=>{
+                setText(e.target.value);
+              }}
             />
 
             <Button
               className={"search-button"}
               startIcon={<IoSearchOutline style={{ color: "white" }} />}
+   	      onClick={search}
             />
           </Form>{" "}
           <div

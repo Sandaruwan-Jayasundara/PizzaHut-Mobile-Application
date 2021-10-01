@@ -19,13 +19,14 @@ const SingleProduct = (props) => {
   const [count, setCount] = useState(1);
   const [price, setPrice] = useState(0);
   const [size, setSize] = useState("");
+ 
 
   const history = useHistory();
 //these are the options thats are use in the select size dropdown
   const options = [
     { value: "Small", label: "Small" },
     { value: "Medium", label: "Medium" },
-    { value: "large", label: "Large" },
+    { value: "Large", label: "Large" },
     { value: "Regular", label: "Regular" },
   ];
 
@@ -49,26 +50,29 @@ const SingleProduct = (props) => {
   function addToCart() {
     const cartItem = {
       qty: count,
-      id: props.product._id,
+      product_id: props.product._id,
       price: price,
       title: props.product.title,
       size: size,
+      user:localStorage.getItem("userid"),
+      image:props.product.image
     };
-
     axios
-      .get(`http://localhost:8070/carts/${props.product._id}`)
+      .get(`http://localhost:8070/carts/${localStorage.getItem("userid")}/${props.product._id}/${size}`)
       .then((res) => {
-        const Item = res.data;
-        return Item;
+     const Item=res.data[0];
+     return Item;
+      
       })
       .then((Item) => {
+        console.log(Item)
         if (Item != null) {
           const newCartItem = {
-            qty: count,
+            qty: count+Item.qty,
           };
           axios
             .patch(
-              `http://localhost:8070/carts/update/${props.product._id}`,
+              `http://localhost:8070/carts/update/${Item._id}`,
               newCartItem
             )
             .then((res) => {
@@ -83,6 +87,7 @@ const SingleProduct = (props) => {
               alert("product successfully added to the cart");
             })
             .catch((err) => {
+              console.log(cartItem)
               console.log(err);
             });
         }
@@ -115,7 +120,7 @@ const SingleProduct = (props) => {
           component="img"
           height="190"
           image=""
-          src={`http://localhost:3000/images/${props.product.image}`}
+          src={`http://localhost:3000/Profile/${props.product.image}`}
           title="Contemplative Reptile"
         />
         <CardContent>

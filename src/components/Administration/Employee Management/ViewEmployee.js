@@ -59,9 +59,10 @@ function ViewEmployee(props) {
               bordered
               hover
               variant="dark"
-              className={"text-center"}
+             
+              className={'text-center'}
             >
-              <thead>
+              <thead class="thead-light">
                 <tr>
                   <th className={"table-data"}>Email</th>
                   <th className={"table-data"}>Full Name</th>
@@ -99,6 +100,20 @@ function ViewEmployee(props) {
                           <FaEdit color={"white"} />
                         </Link>
                       </Tooltip>
+
+                      <Tooltip
+                      title="View"
+                      className="table-icon"
+                      style={{
+                        color: "red",
+                      }}
+                    >
+                      <Link to={`/admin/um/view-employee-details/${data._id}`}>
+                        <FaEye color={"white"} />
+                      </Link>
+                    </Tooltip>
+
+
                       <Tooltip
                         title="Delete"
                         className="table-icon"

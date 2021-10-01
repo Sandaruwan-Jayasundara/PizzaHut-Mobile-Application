@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, ButtonGroup, Card, Container } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  Col,
+  Container,
+  ListGroup,
+  ListGroupItem,
+  Row,
+} from "react-bootstrap";
 import { GiHamburgerMenu } from "react-icons/all";
 import { Grid, Paper } from "@material-ui/core";
 import SingleProduct from "./Main Pages/SingleProduct";
 
-//menu function
+//menu function 
 const Menu = () => {
   const [category, setCategoryState] = useState("");
   const [products, setProduct] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8070/products") //retrieve all the products using api
+      .get("http://localhost:8070/products")//retrieve all the products using api
       .then((res) => {
         setProduct(res.data);
       })
@@ -20,12 +29,13 @@ const Menu = () => {
         console.log("err=>" + err);
       });
   }, [category]);
-
+  
   //This function is to set category when customer click one of the category button
   function openFoodList(cat) {
     console.log(cat);
     setCategoryState(cat);
   }
+
 
   return (
     <Container fluid={"lg"}>

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Col, Form, Row } from "react-bootstrap";
 import { Button, Container, Dialog, Zoom } from "@material-ui/core";
 import { BsPlus, MdDelete, MdModeEdit } from "react-icons/all";
 import AddAddress from "./AddressBook/AddAddress";
 import ChangePassword from "./Settings/ChangePassword";
+import axios from "axios";
 
 function Settings(props) {
   const [openChangePassword, setChangePassword] = useState(false);
@@ -19,6 +20,7 @@ function Settings(props) {
       setChangePassword(false);
     }
   };
+
   return (
     <div>
       <div>
