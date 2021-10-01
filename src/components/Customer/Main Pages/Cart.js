@@ -20,6 +20,7 @@ function Cart(props) {
     const [products, setProducts] = useState([]);
     const history=useHistory();
     const [total,setTotal]=useState(0);
+    const [value,setValue]=useState(0);
 
     useEffect(() => {
         axios.get(`http://localhost:8070/carts/${localStorage.getItem("userid")}`).then((res) => {
@@ -27,21 +28,21 @@ function Cart(props) {
         console.log(res.data);
             setProducts(res.data);
         }).then(()=>{
-axios.get(`http://localhost:8070/carts/total/${localStorage.getItem("userid")}`).then(res=>{
-    setTotal(res.data.total);
-    console.log(total);
+          axios.get(`http://localhost:8070/carts/total/${localStorage.getItem("userid")}`).then(res=>{
+        setTotal(res.data.total);
+           console.log(total);
 })
         }).catch((err) => {
             console.log("err=>" + err);
         });
-    }, [6]);
+    }, [value]);
 
 //remove products using product id
     const removeProduct = (product) => {
         axios.delete(`http://localhost:8070/carts/delete/${
             product._id
         }`).then((res) => {
-            window.location = "/cart";
+            setValue(value+1);
 
         }).catch((err) => {
             console.log("err=>" + err);
@@ -57,7 +58,7 @@ axios.get(`http://localhost:8070/carts/total/${localStorage.getItem("userid")}`)
         axios.patch(`http://localhost:8070/carts/update/${
             p._id
         }`, product).then(res => {
-            window.location = "/cart"
+            setValue(value+1);
         }).catch(err => {
             console.log(err);
         })
@@ -68,13 +69,18 @@ axios.get(`http://localhost:8070/carts/total/${localStorage.getItem("userid")}`)
     }
 
     function continueToCheckout(){
-     history.push({
-       pathname:"/checkout",
-         state:{
-        total:total,
-        product:products
-        }
-     })
+     if(total>0){
+        history.push({
+            pathname:"/checkout",
+              state:{
+             total:total,
+             product:products
+             }
+          })
+     }else{
+         alert('There Are No Items To Checkout')
+     }
+       
     }
 
 
@@ -88,7 +94,7 @@ axios.get(`http://localhost:8070/carts/total/${localStorage.getItem("userid")}`)
             axios.patch(`http://localhost:8070/carts/update/${
                 p._id
             }`, product).then(res => {
-                window.location = "/cart"
+                setValue(value+1);
             }).catch(err => {
                 console.log(err);
             })

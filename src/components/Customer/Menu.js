@@ -116,7 +116,7 @@ const Menu = () => {
             <Grid container spacing={3}>
               {products
                 .filter((product) => {
-                  if (product.status == "Pizza") {
+                  if (product.status == "Pizzas") { 
                     return product;
                   }
                 })

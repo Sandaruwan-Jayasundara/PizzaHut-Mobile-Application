@@ -23,7 +23,7 @@ function EditAddress(props) {
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Ex: My Home"
+            placeholder={props.address}
             // onChange={(e) => {
             //     setAddress(e.target.value);
             // }}

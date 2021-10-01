@@ -31,6 +31,7 @@ function CustomerNavbar(props) {
   const [openSignIn, setSignIn] = useState(false);
   const [openSignUp, setSignUp] = useState(false);
   const [openAddress, setAddress] = useState(false);
+  const [count,setCount]=useState(0);
 
   const handleClickOpenPop = (value) => {
     if (value === "login") {
@@ -76,14 +77,14 @@ const search=()=>{
   };
   useEffect(() => {
     axios
-      .get("http://localhost:8070/carts")
+      .get(`http://localhost:8070/carts/count/${localStorage.getItem('Email')}`)
       .then((res) => {
-        localStorage.setItem("count", res.data.length);
+        setCount(res.data.count);
       })
       .catch((err) => {
         console.log("err=>" + err);
       });
-  }, [6]);
+  }, [count]);
 
   const Logout = () => {
     axios
@@ -192,7 +193,7 @@ const search=()=>{
           </div>{" "}
           <div className={`${role ? "" : "d-none"} `}>
             <Badge
-              badgeContent={localStorage.getItem("count")}
+              badgeContent={count}
               color="secondary"
             >
               <ShoppingCart

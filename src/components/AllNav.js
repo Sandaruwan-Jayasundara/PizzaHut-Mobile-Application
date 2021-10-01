@@ -10,6 +10,7 @@ function AllNav() {
     return <AdminPanel />;
   } else {
     return <CustomerDashboard />;
+    //<CustomerDashboard />
   }
 }
 

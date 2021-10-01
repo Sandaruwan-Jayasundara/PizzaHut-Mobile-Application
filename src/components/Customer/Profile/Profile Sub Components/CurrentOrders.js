@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../../../stylesheets/Profile.css";
 import { Dropdown, Form } from "react-bootstrap";
 import { IoList } from "react-icons/all";
 import { Select, Typography } from "@material-ui/core";
 import OrderItem from "./OrderItem";
+import axios from 'axios';
 function CurrentOrders(props) {
   const [orderStatus, setOrderStatus] = useState("All");
+  const [orders,setOrders]=useState([]);
   function openOrdersList(value) {
     setOrderStatus(value);
   }
+
+useEffect(()=>{
+axios.get(`http://localhost:8070/orders/getcurrent/${localStorage.getItem('Email')}`).then(res=>{
+  setOrders(res.data)
+}).catch(err=>{
+  console.log('err=>'+err);
+})
+},[]);
   return (
     <div>
       <div>
@@ -47,12 +57,15 @@ function CurrentOrders(props) {
         </div>
       </div>
 
-      {/*menu eke items gaththu widihata*/}
+  
 
       <div>
         <div className={` ${orderStatus === "All" ? "" : "d-none"}`}>
-          {" "}
-          <OrderItem />
+        {
+          orders.map(order=>{
+           return  <OrderItem  orders={order}/>;
+          })
+        }
         </div>{" "}
         <div className={` ${orderStatus === "New" ? "" : "d-none"}`}>
           <OrderItem />
