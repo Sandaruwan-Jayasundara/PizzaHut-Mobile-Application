@@ -8,6 +8,7 @@ import axios from "axios";
 function AddressItem(props) {
   const [openEditAddress, setEdit] = useState(false);
   const [openDeleteAddress, setDelete] = useState(false);
+ 
 
   const handleClickOpenPop = (value) => {
     if (value === "edit") {
@@ -16,6 +17,14 @@ function AddressItem(props) {
       setDelete(true);
     }
   };
+
+  const removeAdress=(id)=>{
+ axios.delete(`http://localhost:8070/deliveries/delete/${id}`).then(res=>{
+   alert('Address Deleted..!')
+ }).catch(err=>{
+   console.log(err);
+ })
+  }
 
   const handleClosePop = (value) => {
     if (value === "edit") {
@@ -53,7 +62,7 @@ function AddressItem(props) {
               <Button
                 className={"address-delete-button"}
                 startIcon={<MdDelete />}
-                onClick={() => handleClickOpenPop("delete")}
+                onClick={removeAdress.bind(this,props.address._id)}
               >
                 Delete
               </Button>{" "}

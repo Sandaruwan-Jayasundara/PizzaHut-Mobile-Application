@@ -8,6 +8,7 @@ function AddAddress(props) {
   const options = [
     { value: "Colombo", label: "Colombo" },
     { value: "Galle", label: "Galle" },
+    { value: "Kandy", label: "Kandy" },
     { value: "Kaluthara", label: "Kaluthara" },
     { value: "Kurunegala", label: "Kurunegala" },
   ];

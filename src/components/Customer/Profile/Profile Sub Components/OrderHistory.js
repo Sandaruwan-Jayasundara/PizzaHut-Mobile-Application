@@ -10,7 +10,7 @@ function OrderHistory(props) {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:8070/orders/getcurrent/${localStorage.getItem(
+        `http://localhost:8070/orders/gethistory/${localStorage.getItem(
           "Email"
         )}`
       )
@@ -45,7 +45,7 @@ function OrderHistory(props) {
             {/*<option aria-label="None" value="" />*/}
             {/*loop order statuses below*/}
             <option onClick={() => openOrdersList("completed")}>
-              Completed
+            Delivered
             </option>
             <option onClick={() => openOrdersList("cancelled")}>
               Cancelled
@@ -64,7 +64,7 @@ function OrderHistory(props) {
           {" "}
           {orders
             .filter((order) => {
-              if (order.status === "completed") {
+              if (order.status === "delivered") {
                 return order;
               }
             })

@@ -194,6 +194,7 @@ function AddUser(props) {
                   <option selected>Select Branch</option>
                   <option value="Colombo">Colombo</option>
                   <option value="Kandy">Kandy</option>
+                  <option value="Kalutara">Kaluthara</option>
                   <option value="Galle">Galle</option>
                   <option value="Kurunegala">Kurunegala</option>
                 </select>

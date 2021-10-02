@@ -5,7 +5,7 @@ import { useLocation } from 'react-router';
 import ChangeStatus from './ChangeStatus';
 
 
-function ViewOrder(props) {
+function ViewDelivery(props) {
 
 const location=useLocation(); 
 const products=location.state.order.products;
@@ -66,4 +66,4 @@ const delivery=location.state.order.delivery_code
   );
 }
 
-export default ViewOrder;
+export default ViewDelivery;

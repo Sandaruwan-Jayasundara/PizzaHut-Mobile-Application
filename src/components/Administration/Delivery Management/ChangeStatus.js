@@ -19,21 +19,21 @@ class ChangeStatus extends Component {
 
     updateOrder(){
         let newOrder={};
-       if(this.state.status=='new'){
+       if(this.state.status=='ready'){
        newOrder={
-          status:'processing',
+          status:'ontheway',
           assign_to:this.state.emp
       }
        }
-       else if(this.state.status=='processing'){
+       else if(this.state.status=='ontheway'){
         newOrder={
-            status:'ready',
+            status:'delivered',
         }
        }
 
      axios.patch(`http://localhost:8070/orders/edit/${this.props.order}`,newOrder).then(res=>{
          alert('Stage completed');
-         window.location='/admin/orders'
+         window.location='/admin/delivery'
      })
     .catch(err=>{
         console.log(err);
@@ -41,15 +41,14 @@ class ChangeStatus extends Component {
     }
 
     componentDidMount() {
-    if(this.state.status=='new'){
-        axios.get(`http://localhost:8070/employee-management/employee/chefs/${this.props.city}`).then(res=>{
-            this.setState({chefs:res.data});
-            
+        axios.get(`http://localhost:8070/employee-management/employee/d_guys/${this.props.city}`).then(res=>{
+            this.setState({del_guys:res.data});
+            console.log(res.data)
             let data=[];
-            this.state.chefs.map(chef=>{
+            this.state.del_guys.map(guy=>{
             let item={  
-                value:chef._id,
-                label:chef.FirstName+' '+chef.LastName
+                value:guy._id,
+                label:guy.FirstName+' '+guy.LastName
             }
             console.log(item)
             data.push(item);
@@ -59,31 +58,13 @@ class ChangeStatus extends Component {
                 }).catch(err=>{
                     console.log(err);
                 })
-    }
-    else if(this.state.status=='ready'){
-        axios.get().then(res=>{
-            this.setState({del_guy:res.data});
-            let data=[];
-           thsi.state.del_guys.map(chef=>{
-            let item={
-                value:chef._id,
-                lable:chef.name
-            }
-            data.push(item);
-            })
-            console.log(data)
-           this.setState({options:data});
-                }).catch(err=>{
-                   this.setState({emp:e.value});
-                   console.log(this.state.emp)
-                })
-    }
+
    }
     render() { 
-        if(this.state.status=='new'){
+        if(this.state.status=='ready'){
             return(
                <div>
-               <h1>Status:New</h1>
+               <h1>Status:Ready</h1>
          
                <Select
                maxMenuHeight={125}
@@ -92,20 +73,27 @@ class ChangeStatus extends Component {
                    this.setState({emp:e.value});
                }}
              />
-               <button onClick={this.updateOrder}>Assign a chef</button>
+               <button onClick={this.updateOrder}>Assign a delivery guy</button>
             
                </div>
                 );
         }
     
-        else if(this.state.status=='processing'){
+        else if(this.state.status=='ontheway'){
             return(
                 <div>
-                <h1>Status:Processing</h1>
-                <button onClick={this.updateOrder}>Mark as ready</button>
+                <h1>Status:On the way</h1>
+                <button onClick={this.updateOrder}>Mark as delivered</button>
                 </div>
                 
                 );
+        }
+        else{
+return(
+    <div>
+    <h2>Order Completed</h2>
+    </div>
+);
         }
     
 

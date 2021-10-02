@@ -25,6 +25,7 @@ import Refund from "../components/Administration/Payment Management/Refund";
 import ContactBuyer from "../components/Administration/Payment Management/contactBuyer";
 import EmployeeRecords from "../components/Administration/Employee Management/EmployeeRecords";
 import RefundInvoice from "../components/Administration/Payment Management/RefundInvoice";
+import ViewDelivery from "../components/Administration/Delivery Management/ViewDelivery";
 
 function AdminRoutes(props) {
   return (
@@ -66,6 +67,7 @@ function AdminRoutes(props) {
       <Route path="/admin/update-promo" component={UpdatePromotion} />
 
       <Route path="/admin/delivery" component={Delivery} />
+      <Route path="/admin/view-delivery" component={ViewDelivery} />
       <Route path="/admin/dashboard" component={Dashboard} />
       <Route path="/admin/view-order" component={ViewOrder} />
       <Route path="/admin/orders" component={Orders} />

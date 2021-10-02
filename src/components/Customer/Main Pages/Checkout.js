@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory, useLocation } from 'react-router';
+import { ThemeProvider } from 'react-bootstrap';
 
 
 const Checkout=()=>{
@@ -20,11 +21,12 @@ const onSubmitForm=(e)=>{
 
 const delivery={
     fullname:fullname,
-    email:email,
+    user:localStorage.getItem('Email'),
     address:address,
     city:city,
     zipcode:zipcode,
     state:state,
+    status:'temp',
     total:total
 }
 axios.post('http://localhost:8070/deliveries/add',delivery).then(res=>{
@@ -54,12 +56,7 @@ return(
 }
 
 }/><br/>
-<label>Email</label><br/>
-<input type={Text} placeholder="Email" onChange={
-    (e)=>{
-        setEmail(e.target.value)
-    }
-}/><br/>
+
 
 <label>Address</label><br/>
 <input type={Text} placeholder="Address" onChange={

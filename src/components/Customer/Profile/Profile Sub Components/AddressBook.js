@@ -23,7 +23,7 @@ function AddressBook(props) {
       .catch((err) => {
         console.log("err=>" + err);
       });
-  }, []);
+  },[]);
 
   const handleClickOpenPop = (value) => {
     if (value === "add") {
@@ -58,7 +58,7 @@ function AddressBook(props) {
       {addresses.map((address, index) => {
         return (
           <div>
-            <AddressItem key={index} address={address} />
+            <AddressItem key={index}    address={address} />
           </div>
         );
       })}
