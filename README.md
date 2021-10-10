@@ -22,7 +22,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/mandara-fernando/PizzaHut-Frontend">
+  <a href="https://github.com/Sandaruwan-Jayasundara/PizzaHut-Mobile-Application">
     <img src="assets/images/Pizza_Hut_logo.png" alt="Logo" width="80" height="80">
   </a>
 
