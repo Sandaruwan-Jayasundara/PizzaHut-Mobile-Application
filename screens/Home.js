@@ -105,7 +105,8 @@ const Home = ({ navigation }) => {
                     itemImage:item.mobileImage,
                     itemPrice:item.prices,
                     itemTitle: item.title,
-                    itemStatus:item.status
+                    itemStatus:item.status,
+                    itemDescription:item.description
                     })}
             >
             
@@ -149,7 +150,7 @@ const Home = ({ navigation }) => {
                             marginRight: 10
                         }}
                     />
-                    <Text style={{ ...FONTS.body3 }}>Rs.{item.prices}</Text>
+                    <Text style={{ ...FONTS.body3 }}>Rs.{item.prices}.00</Text>
 
                     {/* Categories */}
                     <View

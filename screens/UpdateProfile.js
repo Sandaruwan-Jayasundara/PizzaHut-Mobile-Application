@@ -29,24 +29,20 @@ import {
 } from 'react-native';
 import { color } from "react-native-reanimated";
 
-function Register({ navigation }) {
+function UpdateProfile({ navigation }) {
   
   const [UserName, setUserName] = useState();
   const [Email, setEmail] = useState();
   const [Phone, setPhone] = useState();
-  const [Password, setPassword] = useState();
-  const [RePassword, setRePassword] = useState();
- 
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
-  function registerApi(){
+
+  function UpdateApi(){
 
     const data = {
       UserName,
       Email,
-      Phone,
-      Password,
-      RePassword
+      Phone
+
     }
 
     if(!UserName){
@@ -55,19 +51,15 @@ function Register({ navigation }) {
       ToastAndroid.show("Please Enter Email", ToastAndroid.SHORT)
     }else if(!Phone){
       ToastAndroid.show("Please Enter Contact Number", ToastAndroid.SHORT)
-    }else if(!Password){
-      ToastAndroid.show("Please Enter Password", ToastAndroid.SHORT)
-    }else if(!RePassword){
-      ToastAndroid.show("Please Enter Password", ToastAndroid.SHORT)
     }else{
-      axios.post('http://10.0.2.2:8070/auth/register',data)
+      axios.patch('http://10.0.2.2:8070/auth/update',data)
       .then(function (response) {
         if (Platform.OS === 'android') {
-          ToastAndroid.show("Registration Success", ToastAndroid.SHORT)
-            navigation.navigate("Login")
+          ToastAndroid.show("Profile Updated", ToastAndroid.SHORT)
+            navigation.navigate("Home")
         } else {
           AlertIOS.alert("Registration Success");
-          navigation.navigate("Login")
+          navigation.navigate("Profile")
         }
       })
       .catch(function (error) {
@@ -105,7 +97,6 @@ function Register({ navigation }) {
                         }}
                     />
                 </TouchableOpacity>
-
                 <View
                     style={{
                       marginLeft:-40,
@@ -124,11 +115,9 @@ function Register({ navigation }) {
                            
                         }}
                     >
-                        <Text style={{ ...FONTS.h3, color:COLORS.white }}>Register</Text>
+                        <Text style={{ ...FONTS.h3, color:COLORS.white }}>Update Profile</Text>
                     </View>
                 </View>
-
-
                 </View>
                 </ImageBackground>
             </View>
@@ -141,26 +130,25 @@ function Register({ navigation }) {
 
 
 
-function SignUp(){
+function Update(){
 
   const [isSelected, setSelection] = useState(false);
 
     return(
       
-      <View style={ styles.container }>
-      <ImageBackground  source={images.Register_Image} resizeMode="cover" style={styles.image}> 
 <KeyboardAvoidingView behavior='padding'>
-<View>
-<View>
+<View style={{
 
-
+}}>
 
 <View style={{
-                            padding: SIZES.padding3 * 2,
-                            alignItems: 'center',
-                            marginTop:120,
-                            justifyContent: 'center'
-                        }}>   
+  width:'100%',
+  height:700,
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor:'white',
+  
+  }}>
 
 <View>
 <View   style={styles.ViewOfInput}>
@@ -177,8 +165,6 @@ function SignUp(){
   }
 />
 </View>
-
-
 
 <View   style={styles.ViewOfInput}>
 <Input
@@ -211,78 +197,31 @@ onChangeText={text => setEmail(text)}
 
 
 
-
-
-<View   style={styles.ViewOfInput}>
-
-<Input placeholder="Password" secureTextEntry={true}
-onChangeText={text => setPassword(text)}
-leftIcon={
-    <Icon
-      name='lock'
-      size={20}
-      color='black'
-    /> 
-  }
-
- />
-</View>
-
-
-
-<View  style={styles.ViewOfInput}>
-
-<Input placeholder="Re-Password" secureTextEntry={true}
-onChangeText={text => setRePassword(text)}
-leftIcon={
-    <Icon
-      name='lock'
-      size={20}
-      color='black'
-    /> 
-  }
- />
-</View>
-
-<CheckBox
-  containerStyle={{backgroundColor:'white',marginTop:-20}}
-  title='Agree With Policies'
-  checked={toggleCheckBox}
-  onPress={() => setToggleCheckBox({checked: !toggleCheckBox})}
-/>
-
-
-
 <View>
   <View  style={{
     
   }}>
-
   </View>
 
   <View
   style={{
-    marginTop:20
+    marginTop:40
   }}
 >
-
-
-
-
   <TouchableOpacity
       style={{
           width: SIZES.width * 0.78,
-          padding: 7,
+          padding: SIZES.padding2,
           backgroundColor: '#E13340',
           alignItems: 'center',
           justifyContent: 'center',
-          marginBottom:10,
+          marginBottom:20,
           borderRadius:10
         
       }}
-      onPress={registerApi}
+      onPress={UpdateApi}
   >
-      <Text style={{ color: COLORS.white, ...FONTS.h4 }}>Register</Text>
+      <Text style={{ color: COLORS.white, ...FONTS.h4 }}>Update</Text>
   </TouchableOpacity>
 </View>
 
@@ -293,18 +232,18 @@ leftIcon={
 
 </View>
 </View>
-</View>
-</View>
-</KeyboardAvoidingView>
-  </ImageBackground>
 
 </View>
+</KeyboardAvoidingView>
+
+
+
 )
 }
   return (
     <SafeAreaView style={styles.container1}>
     {renderHeader()}
-    {SignUp()}
+    {Update()}
 </SafeAreaView>
   );
 }
@@ -312,6 +251,7 @@ leftIcon={
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: COLORS.lightGray2
     },
     ViewOfInput:{
       marginTop:-18,
@@ -346,4 +286,4 @@ const styles = StyleSheet.create({
       }
 })
 
-export default Register;
+export default UpdateProfile;

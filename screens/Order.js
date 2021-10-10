@@ -13,23 +13,14 @@ import axios from "axios";
 import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { isIphoneX } from 'react-native-iphone-x-helper'
 import { icons, images, SIZES, COLORS, FONTS } from '../constants';
-import Dialog, {
-  DialogTitle,
-  DialogContent,
-  DialogFooter,
-  DialogButton,
-  SlideAnimation,
-  ScaleAnimation,
-} from 'react-native-popup-dialog';
-
-
 import {
   ToastAndroid,
   Platform,
   AlertIOS,
 } from 'react-native';
 import { Colors } from "react-native/Libraries/NewAppScreen";
-const Cart = ({ route, navigation }) => {
+import { ScrollView } from "react-native-gesture-handler";
+const Order = ({ route, navigation }) => {
 
   function renderHeader() {
     return (
@@ -62,7 +53,7 @@ const Cart = ({ route, navigation }) => {
                         width: 280,
                     }}
                 >
-                    <Text style={{ ...FONTS.h3, color:COLORS.white, textAlign:'center'}}>Cart</Text>
+                    <Text style={{ ...FONTS.h3, color:COLORS.white, textAlign:'center'}}>Order History</Text>
                 </View>
             </View>
 
@@ -92,18 +83,15 @@ const Cart = ({ route, navigation }) => {
     )
 }
 
-function CartBody(){
+function OrderBody(){
 
   const [cartItem, setProduct] = useState();
   const [total, setTotal] = useState();
   const [Tot, setTot] = useState(0);
-  const [ defaultAnimationDialog, setDefaultAnimationDialog ] = useState(false);
-  const [Id, setId] = useState();
-
-
+  
   useEffect(() => {
       axios
-        .get("http://10.0.2.2:8070/carts")
+      .get("http://10.0.2.2:8070/orders/get")
         .then((res) => {
           ToastAndroid.show("Success", ToastAndroid.SHORT)
           setProduct(res.data);
@@ -125,94 +113,13 @@ function CartBody(){
     }, [20]);
 
 const deleteFromCart = (id) => {
-
-  setId(id)
-  setDefaultAnimationDialog(true)
-}
-
- 
-  const renderItem = ({ item }) => (
-    <View>
-      <View style={{ marginBottom:15}}>
-        <TouchableOpacity style={{width:'98%', backgroundColor:COLORS.white,borderRadius:30}}>
-          <View style={styles.image2StackStackRow}>
-            <View style={styles.image2StackStack}>
-              <View style={styles.image2Stack}>
-                <Image
-                  source={{uri: `http://127.0.0.1:8081${item.itemImage}`}}
-                  resizeMode="contain"
-                  style={styles.image2}
-                ></Image>
-                <View style={styles.productHeader}>
-                <Text style={{color:'black'}}>{item.itemTitle}</Text>
-                <Text style={{color:'black'}}>Qty : {item.qty}</Text>
-                <Text style={styles.itemPrice}>Rs.{item.price}.00</Text>
-                </View>
-                
-
-              </View>
-            </View>
-            <View style={styles.loremIpsum12RowColumn}>
-              <TouchableOpacity style={styles.button13}
-                        onPress={deleteFromCart.bind(this,item._id)}
-                       
-              > 
-                <View style={styles.rect15Stack}>
-                  <View style={styles.rect15}></View>
-                  <MaterialCommunityIconsIcon
-                    name="delete"
-                    style={styles.icon9}
-                  ></MaterialCommunityIconsIcon>
-                </View> 
-              </TouchableOpacity>
-
-
-
-
-
-            </View>
-          </View>
-        </TouchableOpacity>        
-      </View>
-      <Dialog
-          onDismiss={() => {
-            setDefaultAnimationDialog(false);
-          }}
-          width={0.9}
-          visible={defaultAnimationDialog}
-          rounded
-          actionsBordered
-          dialogTitle={
-            <DialogTitle
-              title="Are you sure to delete?"
-              style={{
-                backgroundColor: '#F7F7F8',
-              }}
-              hasTitleBar={false}
-              align="left"
-            />
-          }
-          footer={
-            <DialogFooter>
-              <DialogButton
-                text="CANCEL"
-                bordered
-                onPress={() => {
-                  setDefaultAnimationDialog(false);
-                }}
-                key="button-1"
-              />
-              <DialogButton
-                text="DELETE"
-                bordered
-                onPress={() => {
-                  setDefaultAnimationDialog(false);
-
-                  axios.delete(`http://10.0.2.2:8070/carts/delete/${Id}`).then((res) => {
+  axios.delete(`http://10.0.2.2:8070/carts/delete/${
+    id
+  }`).then((res) => {
     ToastAndroid.show("Removed", ToastAndroid.SHORT)
 
     axios
-    .get("http://10.0.2.2:8070/carts")
+    .get("http://10.0.2.2:8070/orders/get")
     .then((res) => {
       setProduct(res.data);
 
@@ -223,10 +130,6 @@ const deleteFromCart = (id) => {
         setTot(totals);
 
       })
-
-
-
-
     
     })
     .catch((err) => {
@@ -237,20 +140,47 @@ const deleteFromCart = (id) => {
   }).catch((err) => {
       console.log("err=>" + err);
   });
- }}
-    key="button-2"
-  />
-   </DialogFooter>
-    }>
- <DialogContent
-  style={{
-      backgroundColor: '#F7F7F8',
-}}>
-    <Text>
-       Once click on selected item permanently will be deleted 
-     </Text>
-  </DialogContent>
-</Dialog>
+}
+
+ 
+  const renderItem = ({ item }) => (
+
+
+    <View>
+        {item.Cart.map((v, i) => (
+          
+
+      <View style={{ marginBottom:15}}>
+        <TouchableOpacity style={{width:'98%', backgroundColor:COLORS.white,borderRadius:30}}>
+          <View style={styles.image2StackStackRow}>
+            <View style={styles.image2StackStack}>
+       
+    
+              <View style={styles.image2Stack}>
+                <Image
+                 source={{uri: `http://127.0.0.1:8081${v.itemImage}`}}
+                  resizeMode="contain"
+                  style={styles.image2}
+                ></Image>
+                <View style={styles.productHeader}>
+                <Text style={{color:'black'}}>{v.itemTitle}</Text>
+                <Text style={{color:'black'}}>Qty : {v.qty}</Text>
+                <Text style={styles.itemPrice}>Rs.{v.price}.00</Text>
+                </View>
+                
+
+              </View>
+             
+            
+            </View>
+
+          </View>
+        </TouchableOpacity>        
+      </View>
+ 
+      ))}
+      </View>
+  
 
 
 
@@ -260,12 +190,29 @@ const deleteFromCart = (id) => {
 
 
 
-    </View>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
   )
   return(
-    <View style={{flex:1}}>
-<View style={{flex:0.8}}>
-
+  
 
 <FlatList
     data={cartItem}
@@ -278,44 +225,6 @@ const deleteFromCart = (id) => {
 />
 
 
-</View>
-
-
-  <View style={{flex:0.25,backgroundColor:COLORS.white,width:'95%',marginLeft:'auto', marginRight:'auto',  borderRadius: 30,}}>
-
-  <View style={styles.subTotalRow}>
-
-  <View style={styles.discountRow}>
-  </View>
-  <View style={styles.discountRow}>
-    <Text style={{...FONTS.h2},styles.total}>Total</Text>
-    <Text style={{...FONTS.h4},styles.loremIpsum11}>Rs.{Tot}.00</Text>
-  </View>
-
-
-  <View
-                  style={{
-                      padding: SIZES.padding * 2,
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                  }}
-              >
-                  <TouchableOpacity
-                      style={{
-                          width: SIZES.width * 0.84,
-                          padding: SIZES.padding,
-                          backgroundColor: "#E13340",
-                          alignItems: 'center',
-                          borderRadius: SIZES.radius
-                      }}
-                      onPress={() => navigation.navigate("Address")}
-                  >
-                      <Text style={{ color: COLORS.white, ...FONTS.h2 , marginLeft:'auto', marginRight:'auto'}}>Check Out</Text>
-                  </TouchableOpacity>
-              </View>
-</View>
-</View>
-</View>
 
 
 
@@ -325,7 +234,7 @@ const deleteFromCart = (id) => {
 return (
     <SafeAreaView style={styles.container}>
         {renderHeader()}
-        {CartBody()}
+        {OrderBody()}
     </SafeAreaView>
 )
 
@@ -445,7 +354,7 @@ const styles = StyleSheet.create({
     shadowRadius: 24
   },
   image2: {
-    marginLeft:5,
+    marginLeft:15,
     marginBottom:10,
     borderRadius:100,
     width: 130,
@@ -931,4 +840,4 @@ image: {
   }
 });
 
-export default Cart;
+export default Order;

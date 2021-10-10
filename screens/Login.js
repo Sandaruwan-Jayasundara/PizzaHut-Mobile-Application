@@ -18,13 +18,16 @@ import {
 import axios from "axios";
 import { icons, COLORS, SIZES, FONTS, images } from '../constants'
 import LinearGradient from 'react-native-linear-gradient';
+import { CheckBox,Input } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = { 
             username:'',
-            password:''
+            password:'',
+            toggleCheckBox: false
          }
     }
 
@@ -57,57 +60,91 @@ class Login extends Component {
                     <View style={{
                             padding: SIZES.padding3 * 2,
                             alignItems: 'center',
-                            marginTop:50,
-                            justifyContent: 'center'
+                            marginTop:190,
+                            justifyContent: 'center',
+                            width: SIZES.width * 0.78,
+                            alignItems: 'center',
+                            marginLeft:'auto', marginRight:'auto'
                         }}>           
-                    <TextInput style={{
-                              width: SIZES.width * 0.74,
-                                padding: SIZES.padding2,
-                                backgroundColor: COLORS.lightGray2,
-                                borderColor:COLORS.black,
-                                alignItems: 'center',
-                            }}
-                        placeholder='username'
+
+
+
+                        <Input
+                        style={{padding: 10 }}
                         onChangeText={(username) => this.setState({username})}
-                        underlineColorAndroid='transparent'
-                    ></TextInput>
+                        placeholder='Email'
+                        leftIcon={
+                            <Icon
+                            name='envelope'
+                            size={17}
+                            color='black'
+                            /> 
+                        }
+                        />
+
                     </View>
-                    <View                          style={{
+                    <View style={{
                             padding: SIZES.padding3 * 2,
                             alignItems: 'center',
-                            justifyContent: 'center'
+                            marginTop:-15,
+                            justifyContent: 'center',
+                            width: SIZES.width * 0.78,
+                            alignItems: 'center',
+                            marginLeft:'auto', marginRight:'auto'
                         }}>
-                    <TextInput             style={{
-                                                 width: SIZES.width * 0.74,
-                                padding: SIZES.padding2,
-                                backgroundColor: COLORS.lightGray2,
-                                borderColor:COLORS.black,
-                                alignItems: 'center',
-                            }}
-                        placeholder='password'
+
+                        <Input
+                        secureTextEntry={true}
+                        style={{padding: 10 }}
                         onChangeText={(password) => this.setState({password})}
-                        underlineColorAndroid='transparent'
-                    ></TextInput>
+                        placeholder='Password'
+                        leftIcon={
+                            <Icon
+                            name='lock'
+                            size={17}
+                            color='black'
+                            /> 
+                        }
+                        />
+
+
+
                     </View>
+
+                    <View  style={{ 
+    marginLeft:45,  height:60, marginTop:-35
+}}>
+<View>
+<CheckBox
+containerStyle={{backgroundColor:'white' ,width:200,borderRadius:20}}
+textStyle={{fontSize:14}}
+title='Remember Me'
+checked={this.state.toggleCheckBox}
+onPress={() => this.setState({toggleCheckBox: !this.state.toggleCheckBox})}
+/>
+</View>
+</View>
+
+
                         <View
                         style={{
                             padding: SIZES.padding * 2,
                             alignItems: 'center',
-                            marginTop:15,
+      
                             justifyContent: 'center'
                         }}
                     >
                         <TouchableOpacity
                             style={{
-                                width: SIZES.width * 0.74,
-                                padding: SIZES.padding2,
-                                borderRadius:15,
-                                backgroundColor: COLORS.DarkRed,
-                                alignItems: 'center'
+                                width: SIZES.width * 0.72,
+                                padding: 6,
+                                borderRadius:20,
+                                backgroundColor: '#E13340',
+                                alignItems: 'center',
                             }}
                             onPress={this.login}
                         >
-                            <Text style={{ color: COLORS.white, ...FONTS.h4 }}>Login</Text>
+                            <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Login</Text>
                         </TouchableOpacity>
                     </View>
                  
@@ -126,16 +163,16 @@ class Login extends Component {
                     >
                         <TouchableOpacity
                             style={{
-                                marginTop:160,
-                                width: SIZES.width * 0.74,
-                                padding: SIZES.padding2,
-                                backgroundColor: COLORS.DarkRed,
+                                marginTop:140,
+                                width: SIZES.width * 0.72,
+                                padding: 6,
+                                backgroundColor:'#E13340',
                                 alignItems: 'center',
-                                borderRadius:15,
+                                borderRadius:20
                             }}
                             onPress={this.Register}
                         >
-                            <Text style={{ color: COLORS.white, ...FONTS.h4 }}>Register</Text>
+                            <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Register</Text>
                         </TouchableOpacity>
                     </View>
             </View>
@@ -159,27 +196,34 @@ class Login extends Component {
             Password: this.state.password
         }
 
+        if(!this.state.username){
 
-        axios.post('http://10.0.2.2:8070/auth/login',data)
+             ToastAndroid.show("Please Enter Email", ToastAndroid.SHORT)
+        }else if(!this.state.password){
+            ToastAndroid.show("Please Enter Password", ToastAndroid.SHORT)
+
+        }else if(!this.state.toggleCheckBox){
+            
+            ToastAndroid.show("Please check the box", ToastAndroid.SHORT)
+        }else{
+            axios.post('http://10.0.2.2:8070/auth/login',data)
             .then((res) => {
                 if (Platform.OS === 'android') {
-                    ToastAndroid.show("Success", ToastAndroid.SHORT)
+                    ToastAndroid.show("LoggedIn", ToastAndroid.SHORT)
                     this.props.navigation.navigate('Home');
                   } else {
-                    AlertIOS.alert("Success"); 
+                    AlertIOS.alert("LoggedIn"); 
                     this.props.navigation.navigate('Home');
                   }
             }) 
 
             .catch((err) => {
-                console.log(err);
+                ToastAndroid.show("Login Fail Try Again", ToastAndroid.SHORT)
               });
+        }
     }
-
-
-
-
 }
+
 const styles = StyleSheet.create({
  
     container: {

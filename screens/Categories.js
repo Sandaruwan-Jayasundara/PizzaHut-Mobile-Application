@@ -27,9 +27,9 @@ const Categories = ({ navigation }) => {
             icon: icons.rice_bowl,
         },
         {
-            id: "Pizzas",
-            name: "Pizza",
-            icon: icons.noodle,
+            id: "Desserts",
+            name: "Dessert",
+            icon: icons.drink,
         },
         {
             id: "Appetizers",
@@ -38,16 +38,15 @@ const Categories = ({ navigation }) => {
         },
 
         {
-            id: "Desserts",
-            name: "Dessert",
+            id: "Pizzas",
+            name: "Pizza",
             icon: icons.pizza,
         },
         {
-            id: "Beverages",
-            name: "Beverage",
-            icon: icons.pizza,
-        },
-
+            id: "Bun",
+            name: "Bun",
+            icon: icons.hamburger,
+        }
     ]
     const [restaurantData, setProduct] = useState();
     const [categories, setCategories] = React.useState(categoryData)
@@ -91,7 +90,7 @@ const Categories = ({ navigation }) => {
 
     function renderHeader() {
         return (
-            <View style={{  height: 50 , marginBottom:30, backgroundColor:'#E13340'}}>
+            <View style={{  height: 50 , backgroundColor:'#E13340'}}>
                 {/* <ImageBackground  source={images.Header} style={styles.image}> */}
                 <View style={{ flexDirection: 'row', height: 50 }}>
                 <TouchableOpacity
@@ -252,6 +251,7 @@ const Categories = ({ navigation }) => {
 
                 {/* Restaurant Info */}
                 <Text style={{ ...FONTS.body2 }}>{item.title}</Text>
+                <Text style={{ ...FONTS.body3 }}>{getCategoryNameById(item.status)}</Text>
 
                 <View
                     style={{
@@ -269,7 +269,7 @@ const Categories = ({ navigation }) => {
                             marginRight: 10
                         }}
                     />
-                    <Text style={{ ...FONTS.body3 }}>{item.prices}</Text>
+                    <Text style={{ ...FONTS.body3 }}>Rs.{item.prices}.00</Text>
 
                     {/* Categories */}
                     <View
@@ -278,17 +278,7 @@ const Categories = ({ navigation }) => {
                             marginLeft: 10
                         }}
                     >
-             
-                                    <View
-                                        style={{ flexDirection: 'row' }}
-                                        key={item.status}
-                                    >
-                                        <Text style={{ ...FONTS.body3 }}>{getCategoryNameById(item.status)}</Text>
-                                        <Text style={{ ...FONTS.h3, color: COLORS.darkgray }}> . </Text>
-                                    </View>
-                      
-
-                        {/* Price */}
+            
                     
                     </View>
                 </View>

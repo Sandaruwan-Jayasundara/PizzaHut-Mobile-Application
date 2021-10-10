@@ -26,19 +26,20 @@ const Restaurant = ({ route, navigation }) => {
     const [itemPrice, setItemPrice] = React.useState(null);
     const [itemTitle, setItemTitle] = React.useState(null);
     const [itemStatus, setItemStatus] = React.useState(null);
+    const [itemDescriptions, setItemDescriptions] = React.useState(null);
 
     const [currentLocation, setCurrentLocation] = React.useState(null);
     const [orderItems, setOrderItems] = React.useState([]);
 
     React.useEffect(() => {
-        let { itemId,itemImage,itemPrice,itemTitle,itemStatus  } = route.params;
+        let { itemId,itemImage,itemPrice,itemTitle,itemStatus,itemDescription  } = route.params;
 
         setItemId(itemId)
         setItemImage(itemImage)
         setItemPrice(itemPrice)
         setItemTitle(itemTitle)
         setItemStatus(itemStatus)
-
+        setItemDescriptions(itemDescription)
     })
 
 function addToCart(){
@@ -244,7 +245,7 @@ const data = {
                                 </View>
                             </View>
 
-                            {/* Name & Price */}
+ 
                             <View
                                 style={{
                                     width: SIZES.width,
@@ -254,7 +255,8 @@ const data = {
                                 }}
                             >
                                 <Text style={{ marginVertical: 10, textAlign: 'center', ...FONTS.h2 }}>Rs. {itemPrice}.00</Text>
-                                <Text style={{ ...FONTS.body3 }}>{itemTitle}</Text>
+                                <Text style={{ ...FONTS.h3,marginTop:-10, marginBottom:20}}>{itemTitle}</Text>
+                                <Text style={{letterSpacing:1}}>{itemDescriptions}</Text>
                             </View>
                         </View>
          

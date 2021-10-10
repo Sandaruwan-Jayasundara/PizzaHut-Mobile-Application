@@ -78,10 +78,10 @@ function Payment({route,navigation}) {
             .then(function (response) {
               if (Platform.OS === 'android') {
                 ToastAndroid.show("Order Success", ToastAndroid.SHORT)
-                  navigation.navigate("Home")
+                  navigation.navigate("Success")
               } else {
                 AlertIOS.alert("msg");
-                navigation.navigate("Login")
+                navigation.navigate("Success")
               }
             })
             .catch(function (error) {
@@ -277,7 +277,7 @@ function makePayment(){
           width: SIZES.width * 0.8,
           padding: SIZES.padding21,
           marginTop:5,
-          backgroundColor: COLORS.DarkRed,
+          backgroundColor: '#E13340',
           alignItems: 'center',
           borderRadius: SIZES.radius
       }}

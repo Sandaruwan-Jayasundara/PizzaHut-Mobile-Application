@@ -29,7 +29,7 @@ import {
   AlertIOS,
 } from 'react-native';
 import { Colors } from "react-native/Libraries/NewAppScreen";
-const Cart = ({ route, navigation }) => {
+const CartTab = ({ route, navigation }) => {
 
   function renderHeader() {
     return (
@@ -281,7 +281,7 @@ const deleteFromCart = (id) => {
 </View>
 
 
-  <View style={{flex:0.25,backgroundColor:COLORS.white,width:'95%',marginLeft:'auto', marginRight:'auto',  borderRadius: 30,}}>
+  <View style={{flex:0.48,backgroundColor:COLORS.white,width:'95%',marginLeft:'auto', marginRight:'auto',  borderRadius: 30,}}>
 
   <View style={styles.subTotalRow}>
 
@@ -931,4 +931,4 @@ image: {
   }
 });
 
-export default Cart;
+export default CartTab;

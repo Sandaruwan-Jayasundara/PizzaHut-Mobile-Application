@@ -11,8 +11,9 @@ import { isIphoneX } from 'react-native-iphone-x-helper';
 import { Home } from "../screens";
 import  Categories  from "../screens/Categories";
 import  Restaurant  from "../screens/Restaurant";
-import Login from "../screens/Login";
-
+import Profile from "../screens/Profile";
+import Cart from "../screens/Cart";
+import CartTab from "../screens/CartTab";
 import { COLORS, icons } from "../constants"
 
 const Tab = createBottomTabNavigator();
@@ -156,7 +157,7 @@ const Tabs = () => {
                             style={{
                                 width: 25,
                                 height: 25,
-                                tintColor: focused ? COLORS.primary : COLORS.secondary
+                                tintColor: focused ? COLORS.DarkRed : COLORS.secondary
                             }}
                         />
                     ),
@@ -170,16 +171,16 @@ const Tabs = () => {
 
             <Tab.Screen
                 name="Like"
-                component={Home}
+                component={CartTab}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <Image
-                            source={icons.like}
+                            source={icons.basket}
                             resizeMode="contain"
                             style={{
                                 width: 25,
                                 height: 25,
-                                tintColor: focused ? COLORS.primary : COLORS.secondary
+                                tintColor: focused ? COLORS.DarkRed : COLORS.secondary
                             }}
                         />
                     ),
@@ -193,7 +194,7 @@ const Tabs = () => {
 
             <Tab.Screen
                 name="User"
-                component={Login}
+                component={Profile}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <Image
@@ -202,7 +203,7 @@ const Tabs = () => {
                             style={{
                                 width: 25,
                                 height: 25,
-                                tintColor: focused ? COLORS.primary : COLORS.secondary
+                                tintColor: focused ? COLORS.DarkRed : COLORS.secondary
                             }}
                         />
                     ),

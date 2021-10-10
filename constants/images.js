@@ -36,8 +36,12 @@ const Header = require("../assets/images/Header.jpg");
 const Login_Image = require("../assets/images/LoginImage.jpg");
 const Register_Image = require("../assets/images/RegisterInterface.jpg");
 const Payment_Image = require("../assets/images/PaymentPage.jpg");
-
+const Profile_Image = require("../assets/images/Profile.jpg");
 const product = require("../assets/images/avatar-1.jpg");
+const getStart = require("../assets/images/getStart.jpg");
+const Address = require("../assets/images/Address.jpg");
+const PlaceOrder = require("../assets/images/PlaceOrder.jpg");
+
 export default {
     avatar_1,
     avatar_2,
@@ -74,5 +78,9 @@ export default {
     Register_Image,
     Payment_Image,
     Register1,
-    product
+    product,
+    Profile_Image,
+    getStart,
+    Address,
+    PlaceOrder
 }
