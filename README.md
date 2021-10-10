@@ -91,6 +91,10 @@ This project was bootstrapped with [Create React-Native App](https://reactnative
 
 ### Installation
 
+Fist you need to install node modules.
+
+1. `npm install`
+
 In the project directory, you can run:
 
 1.`npx react-native`
