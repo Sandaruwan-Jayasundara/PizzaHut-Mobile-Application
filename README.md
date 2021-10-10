@@ -95,7 +95,7 @@ Fist you need to install node modules.
 
 1. `npm install`
 
-In the project directory, you can run:
+Then In the project directory, you can run Mobile App and Backend:
 
 1.`npx react-native`
 2.`npx react-native run-android`
