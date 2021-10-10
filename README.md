@@ -102,7 +102,7 @@ Then In the project directory, you can run Mobile App and Backend:
 3.`npm run nodemon`
 
 Runs the app in the development mode.\
-Open [http://localhost:8081](http://localhost:8081) to view it in the browser.
+Open [http://localhost:8081](http://localhost:8081) to view it in the Mobile.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
